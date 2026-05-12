@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8"/>
+<title>会社概要 | LEMONDS ENTERTAINMENT</title>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<link rel="icon" href="data:,"/>
+<link rel="stylesheet" href="styles/colors_and_type.css"/>
+<link rel="stylesheet" href="styles/site.css"/>
+<style>
+  html, body { margin: 0; overflow-x: hidden; background: #F4F4F4; scroll-behavior: smooth; }
+  #root { width: 1920px; transform-origin: top left; transform: scale(var(--page-scale, 1)); }
+</style>
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+</head>
+<body>
+<div id="root" data-screen-label="Company"></div>
+
+<script type="text/babel" src="src/shared/SubHeader.jsx"></script>
+<script type="text/babel" src="src/shared/Breadcrumb.jsx"></script>
+<script type="text/babel" src="src/shared/PageHero.jsx"></script>
+<script type="text/babel" src="src/shared/ContactCTA.jsx"></script>
+<script type="text/babel" src="src/shared/Footer.jsx"></script>
+<script type="text/babel" src="src/pages/CompanyPage.jsx"></script>
+
+<script type="text/babel">
+ReactDOM.createRoot(document.getElementById('root')).render(<CompanyPage/>);
+const fitPage = () => {
+  const w = document.documentElement.clientWidth;
+  const scale = Math.min(1, w / 1920);
+  const root = document.getElementById('root');
+  root.style.setProperty('--page-scale', scale);
+  document.body.style.height = '';
+  requestAnimationFrame(() => {
+    const h = root.getBoundingClientRect().height;
+    document.body.style.height = h + 'px';
+  });
+};
+window.addEventListener('resize', fitPage);
+window.addEventListener('load', fitPage);
+requestAnimationFrame(fitPage);
+setTimeout(fitPage, 300);
+setTimeout(fitPage, 1200);
+setTimeout(fitPage, 3000);
+document.addEventListener('load', (e) => { if (e.target && e.target.tagName === 'IMG') fitPage(); }, true);
+</script>
+</body>
+</html>

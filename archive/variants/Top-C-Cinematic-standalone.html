@@ -1,0 +1,606 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8"/>
+<title>LEMONDS — Top C (Filmstrip)</title>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<link rel="stylesheet" href="colors_and_type.css"/>
+<link rel="stylesheet" href="styles.css"/>
+<style>
+  html, body { margin: 0; overflow-x: hidden; background: #F4F4F4; }
+  #root { width: 1920px; transform-origin: top left; transform: scale(var(--page-scale, 1)); }
+
+  /* ── 共通あしらい：左に縦組みインデックス番号、右にタイトル群 ── */
+  .c-section { width: 1920px; margin: 0 auto; padding: 140px 100px 120px; box-sizing:border-box; position:relative; }
+  .c-section--dark { background:#111; color:#F4F4F4; }
+  .c-index {
+    position:absolute; left: 40px; top: 140px;
+    writing-mode: vertical-rl; text-orientation: mixed;
+    font: 700 12px/1 var(--font-en); letter-spacing:.32em; color:rgba(17,17,17,.6);
+  }
+  .c-section--dark .c-index { color: rgba(244,244,244,.6); }
+  .c-section-head { display:grid; grid-template-columns: 1fr 720px; gap: 80px; margin-bottom: 72px; align-items:end; }
+  .c-section-head h2 { font: 700 96px/.95 var(--font-en); letter-spacing:.01em; color:#111; margin: 0; }
+  .c-section--dark .c-section-head h2 { color:#F4F4F4; }
+  .c-section-head .ja { font: 700 22px/1 var(--font-jp); letter-spacing:.12em; color:#111; margin-top: 18px; }
+  .c-section--dark .c-section-head .ja { color: rgba(244,244,244,.85); }
+  .c-section-head .lead { font: 400 16px/1.95 var(--font-jp); letter-spacing:.04em; color:#111; }
+  .c-section--dark .c-section-head .lead { color: rgba(244,244,244,.85); }
+
+  /* ── HERO: シングルワイドのフィルムストリップ写真 ───────────── */
+  .c-hero { width: 1920px; padding: 32px 0 0; }
+  .c-hero-bar { display:flex; justify-content:space-between; align-items:center; padding: 0 100px; font: 700 12px/1 var(--font-en); letter-spacing:.24em; color:#111; }
+  .c-hero-strip {
+    position:relative; margin: 32px 80px 0; height: 720px;
+    border-radius: 4px; overflow:hidden;
+    background: url(${window.LM_ASSET('photo-business-meeting.jpg')}) center/cover;
+  }
+  .c-hero-strip::before {
+    /* 上下にフィルムの送り穴のような帯 */
+    content:''; position:absolute; left:0; right:0; top:0; height: 32px;
+    background-image: repeating-linear-gradient(90deg, #111 0 24px, transparent 24px 56px);
+    background-size: 56px 32px; background-color:#F4F4F4;
+  }
+  .c-hero-strip::after {
+    content:''; position:absolute; left:0; right:0; bottom:0; height: 32px;
+    background-image: repeating-linear-gradient(90deg, #111 0 24px, transparent 24px 56px);
+    background-size: 56px 32px; background-color:#F4F4F4;
+  }
+  .c-hero-tiles { position:absolute; inset: 32px 0; display:grid; grid-template-columns: repeat(5, 1fr); }
+  .c-hero-tiles .t { background-size: cover; background-position:center; border-right: 2px solid #F4F4F4; }
+  .c-hero-tiles .t:last-child { border-right:0; }
+
+  .c-hero-copy { display:grid; grid-template-columns: 1fr 720px; gap: 80px; padding: 96px 100px 0; align-items:end; }
+  .c-hero-copy h1 {
+    font: 700 100px/1.3 var(--font-jp); letter-spacing:.04em; color:#111; margin: 0;
+    text-align: right;
+  }
+  .c-hero-copy h1 mark { background: transparent; color:#111; border-bottom: 6px solid #111; padding-bottom: 4px; }
+  .c-hero-copy .right { display:flex; flex-direction:column; gap: 24px; }
+  .c-hero-copy .right .en { font: 700 20px/1.4 var(--font-en); letter-spacing:.04em; color:#111; }
+  .c-hero-copy .right p { font: 400 16px/1.95 var(--font-jp); letter-spacing:.04em; color:#111; margin:0; max-width: 540px; }
+  .c-hero-copy .right .pickup {
+    margin-top: 16px; padding: 18px 22px; background:#111; color:#F4F4F4;
+    display:flex; justify-content:space-between; align-items:center; gap: 24px;
+    font: 600 14px/1.4 var(--font-jp); letter-spacing:.06em;
+  }
+  .c-hero-copy .right .pickup small { display:block; font: 600 11px/1 var(--font-en); letter-spacing:.18em; color: rgba(244,244,244,.7); margin-bottom: 6px; }
+  .c-hero-copy .right .pickup .a { font: 500 18px/1 var(--font-en); }
+
+  /* ── SERVICE (C案) : 3列カード、画像が右下に重なるオフセット ── */
+  .c-svc { display:grid; grid-template-columns: repeat(3,1fr); gap: 40px 32px; }
+  .c-svc-card { position:relative; background:#fff; border-radius: 24px; padding: 40px 36px 200px; min-height: 360px; overflow:hidden; transition: transform 200ms; }
+  .c-svc-card:hover { transform: translateY(-2px); }
+  .c-svc-card .n { font: 700 14px/1 var(--font-en); letter-spacing:.18em; color: rgba(17,17,17,.5); margin-bottom: 20px; }
+  .c-svc-card h3 { font: 700 26px/1.3 var(--font-jp); letter-spacing:.06em; color:#111; margin: 0 0 14px; }
+  .c-svc-card .en { font: 600 12px/1 var(--font-en); letter-spacing:.18em; color: rgba(17,17,17,.5); margin-bottom: 14px; }
+  .c-svc-card p { font: 400 14px/1.84 var(--font-jp); letter-spacing:.04em; color: rgba(17,17,17,.78); margin: 0; max-width: 320px; }
+  .c-svc-card .img {
+    position:absolute; right: -20px; bottom: -20px; width: 220px; height: 160px;
+    background-size: cover; background-position: center; border-radius: 16px 0 0 0;
+  }
+
+  /* ── REASON: タイムライン縦軸 ── */
+  .c-reason { display:flex; flex-direction:column; gap: 0; border-top: 1px solid rgba(17,17,17,.18); }
+  .c-reason .row { display:grid; grid-template-columns: 120px 200px 1fr 320px; gap: 32px; padding: 48px 0; align-items:center; border-bottom: 1px solid rgba(17,17,17,.18); }
+  .c-reason .row:hover { background: rgba(17,17,17,.03); }
+  .c-reason .k { font: 700 12px/1 var(--font-en); letter-spacing:.22em; color: rgba(17,17,17,.55); }
+  .c-reason .v { font: 700 80px/.9 var(--font-en); letter-spacing:-.01em; color:#111; }
+  .c-reason .v small { font: 700 22px/1 var(--font-en); letter-spacing:.04em; opacity:.5; margin-left: 4px; }
+  .c-reason h3 { font: 700 28px/1.3 var(--font-jp); letter-spacing:.06em; color:#111; margin: 0 0 8px; }
+  .c-reason p { font: 400 14px/1.84 var(--font-jp); letter-spacing:.04em; color: rgba(17,17,17,.78); margin: 0; }
+  .c-reason .thumb { width: 320px; height: 200px; background-size:cover; background-position:center; border-radius: 16px; }
+
+  /* ── STRENGTHS (Reason) — 縦レール＋カウンター＋極大数字 ── */
+  .c-strengths { display:grid; grid-template-columns: 80px 1fr; gap: 48px; padding-top: 24px; }
+  .c-strengths-rail {
+    position:relative; display:flex; flex-direction:column; justify-content:space-around; align-items:center;
+    padding: 60px 0;
+  }
+  .c-strengths-rail::before {
+    content:''; position:absolute; left:50%; top: 0; bottom: 0; width: 1px;
+    background: rgba(17,17,17,.18);
+  }
+  .c-rail-tick {
+    width: 16px; height: 16px; border-radius: 50%;
+    background: #F4F4F4; border: 2px solid #111; position:relative; z-index:1;
+  }
+  .c-strengths-list { display:flex; flex-direction:column; }
+  .c-strength {
+    position:relative; display:grid; grid-template-columns: 1fr 280px;
+    gap: 64px; align-items:center;
+    padding: 56px 0; border-top: 1px solid rgba(17,17,17,.18);
+    overflow:hidden;
+  }
+  .c-strength:last-child { border-bottom: 1px solid rgba(17,17,17,.18); }
+  .c-strength-meta {
+    grid-column: 1 / -1;
+    display:flex; align-items:baseline; gap: 24px; margin-bottom: 8px;
+    font: 700 12px/1 var(--font-en); letter-spacing:.22em; color: rgba(17,17,17,.55);
+  }
+  .c-strength-counter { font: 700 22px/1 var(--font-en); letter-spacing:.04em; color:#111; }
+  .c-strength-counter small { font: 600 12px/1 var(--font-en); letter-spacing:.18em; color: rgba(17,17,17,.45); margin-left: 4px; }
+  .c-strength-body h3 { font: 700 36px/1.4 var(--font-jp); letter-spacing: .06em; color:#111; margin: 0 0 18px; }
+  .c-strength-body p { font: 400 15px/1.95 var(--font-jp); letter-spacing: .04em; color: rgba(17,17,17,.78); margin: 0; max-width: 720px; }
+  .c-strength-num {
+    grid-column: 2; grid-row: 2;
+    font: 700 220px/.85 var(--font-en); letter-spacing: -.04em;
+    -webkit-text-stroke: 2px rgba(17,17,17,.22); color: transparent;
+    text-align: right; align-self: center; pointer-events:none; user-select:none;
+  }
+  .c-strength-body { grid-column: 1; grid-row: 2; }
+
+  /* ── PRODUCTION: 横スクロール風カード ── */  .c-prod { display:grid; grid-template-columns: repeat(4,1fr); gap: 24px; }
+  .c-prod .step { background: rgba(244,244,244,.08); border-radius: 24px; overflow:hidden; display:flex; flex-direction:column; }
+  .c-prod .step .ph { aspect-ratio: 4/3; background-size:cover; background-position:center; }
+  .c-prod .step .body { padding: 32px 28px 36px; display:flex; flex-direction:column; gap: 12px; flex:1; }
+  .c-prod .step .n { display:inline-block; font: 700 12px/1 var(--font-en); letter-spacing:.18em; color: rgba(244,244,244,.7); padding: 6px 12px; background: rgba(244,244,244,.12); align-self:flex-start; }
+  .c-prod .step h3 { font: 700 22px/1.4 var(--font-jp); letter-spacing:.06em; color:#F4F4F4; margin: 0; }
+  .c-prod .step p { font: 400 13px/1.84 var(--font-jp); letter-spacing:.04em; color: rgba(244,244,244,.78); margin: 0; }
+
+  /* ── PRODUCTION: ジグザグショーケース（白背景） ── */
+  .c-section--paper { background: #FFFFFF; }
+  .c-prod-zig { position: relative; padding: 24px 0 0; }
+  .c-prod-spine {
+    position:absolute; left: 50%; top: 24px; bottom: 0; width: 1px;
+    background-image: linear-gradient(180deg, rgba(17,17,17,.32) 0 8px, transparent 8px 16px);
+    background-size: 1px 16px;
+    transform: translateX(-.5px);
+  }
+  .c-prod-zig-row {
+    position:relative;
+    display:grid; grid-template-columns: 1fr 80px 1fr; align-items:center;
+    gap: 0; padding: 56px 0;
+  }
+  .c-prod-zig-row.l .c-prod-zig-photo { grid-column: 1; justify-self: end; }
+  .c-prod-zig-row.l .c-prod-zig-body  { grid-column: 3; justify-self: start; padding-left: 24px; }
+  .c-prod-zig-row.r .c-prod-zig-photo { grid-column: 3; justify-self: start; order: 0; }
+  .c-prod-zig-row.r .c-prod-zig-body  { grid-column: 1; justify-self: end;  text-align: right; padding-right: 24px; }
+  .c-prod-zig-photo {
+    position:relative; width: 720px; height: 420px;
+    background-size:cover; background-position:center;
+    border-radius: 4px; filter: grayscale(8%);
+    box-shadow: 0 24px 48px -16px rgba(17,17,17,.22);
+  }
+  .c-prod-zig-cap {
+    position:absolute; left: 16px; bottom: -28px;
+    background:#111; color:#F4F4F4; padding: 8px 14px;
+    font: 600 11px/1 var(--font-en); letter-spacing: .22em;
+  }
+  .c-prod-zig-row.r .c-prod-zig-cap { left: auto; right: 16px; }
+  .c-prod-zig-pin {
+    grid-column: 2; justify-self: center; position: relative; z-index: 1;
+    width: 80px; height: 80px; border-radius: 50%;
+    background: #FFFFFF; border: 2px solid #111;
+    display:flex; align-items:center; justify-content:center;
+    box-shadow: 0 0 0 12px #FFFFFF;
+  }
+  .c-prod-zig-pin span { font: 700 26px/1 var(--font-en); letter-spacing: .04em; color:#111; }
+  .c-prod-zig-body { max-width: 520px; display:flex; flex-direction:column; gap: 12px; }
+  .c-prod-zig-en { font: 700 12px/1 var(--font-en); letter-spacing: .22em; color: rgba(17,17,17,.55); }
+  .c-prod-zig-body h3 { font: 700 36px/1.4 var(--font-jp); letter-spacing: .06em; color:#111; margin: 0; }
+  .c-prod-zig-body p { font: 400 15px/1.95 var(--font-jp); letter-spacing: .04em; color: rgba(17,17,17,.78); margin: 0; }
+
+  /* ── WORKS: 1+4のメイン+グリッド ── */
+  .c-works-main { position:relative; height: 560px; border-radius: 24px; overflow:hidden; background-size:cover; background-position:center; margin-bottom: 32px; }
+  .c-works-main::after { content:''; position:absolute; inset:0; background: linear-gradient(180deg, transparent 40%, rgba(0,0,0,.7)); }
+  .c-works-main .info { position:absolute; left: 40px; right: 40px; bottom: 40px; color:#fff; z-index:1; display:flex; flex-direction:column; gap: 8px; }
+  .c-works-main .cat { font: 700 12px/1 var(--font-en); letter-spacing:.22em; color: rgba(255,255,255,.85); }
+  .c-works-main .ttl { font: 700 36px/1.3 var(--font-jp); letter-spacing:.04em; }
+  .c-works-main .date { font: 500 12px/1 var(--font-en); letter-spacing:.18em; opacity:.7; }
+  .c-works-grid { display:grid; grid-template-columns: repeat(4,1fr); gap: 32px; }
+
+  /* ── COMPANY ── */
+  .c-company { display:grid; grid-template-columns: 1fr 1fr; gap: 80px; }
+  .c-company .intro p { font: 400 16px/1.95 var(--font-jp); letter-spacing:.04em; color:#111; margin: 0 0 24px; max-width: 540px; }
+  .c-company .table { background:#fff; padding: 48px 56px; border-radius: 28px; }
+  .c-company dl { margin: 0; display:grid; grid-template-columns: 140px 1fr; row-gap: 22px; }
+  .c-company dt { font: 600 12px/1.6 var(--font-en); letter-spacing:.18em; color: rgba(17,17,17,.55); margin: 0; }
+  .c-company dd { font: 500 15px/1.6 var(--font-jp); letter-spacing:.04em; color:#111; margin: 0; }
+
+  /* ── CONTACT ── */
+  .c-contact { display:grid; grid-template-columns: 1fr 1fr; gap: 80px; }
+  .c-contact .chips { display:flex; flex-wrap:wrap; gap: 12px; }
+  .c-contact .chip { padding: 14px 22px; border-radius: 9999px; border: 1px solid rgba(244,244,244,.32); font: 500 14px/1 var(--font-jp); letter-spacing:.04em; color: rgba(244,244,244,.92); }
+  .c-contact .ctas { display:flex; flex-direction:column; gap: 16px; }
+  .c-contact-btn { display:flex; justify-content:space-between; align-items:center; height: 88px; padding: 0 36px; border-radius: 24px; border:0; cursor:pointer; font: 700 22px/1 var(--font-jp); letter-spacing:.08em; }
+  .c-contact-btn--p { background:#F4F4F4; color:#111; }
+  .c-contact-btn--s { background: transparent; color:#F4F4F4; border:1px solid rgba(244,244,244,.4); }
+</style>
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+<script type="text/babel" src="Header.standalone.jsx"></script>
+<script type="text/babel" src="Footer.standalone.jsx"></script>
+<meta name="ext-resource-dependency" content="assets/lemonds-logo-wordmark.svg" data-resource-id="lemonds_logo_wordmark" />
+<meta name="ext-resource-dependency" content="assets/lemonds-logo.svg" data-resource-id="lemonds_logo" />
+<meta name="ext-resource-dependency" content="assets/photo-business-meeting.jpg" data-resource-id="photo_business_meeting" />
+<meta name="ext-resource-dependency" content="assets/photo-collage-hero.png" data-resource-id="photo_collage_hero" />
+<meta name="ext-resource-dependency" content="assets/photo-concert-lights.jpg" data-resource-id="photo_concert_lights" />
+<meta name="ext-resource-dependency" content="assets/photo-cosmetics-mono.jpg" data-resource-id="photo_cosmetics_mono" />
+<meta name="ext-resource-dependency" content="assets/photo-cosmetics-pink.jpg" data-resource-id="photo_cosmetics_pink" />
+<meta name="ext-resource-dependency" content="assets/photo-friends-selfie.jpg" data-resource-id="photo_friends_selfie" />
+<meta name="ext-resource-dependency" content="assets/photo-merch-flatlay.jpg" data-resource-id="photo_merch_flatlay" />
+<script>
+window.LM_ASSET = function(filename){
+  if (window.__resources) {
+    var key = filename.replace(/\.[^.]+$/, '').replace(/[^a-z0-9]+/gi, '_');
+    if (window.__resources[key]) return window.__resources[key];
+  }
+  return 'assets/' + filename;
+};
+</script>
+</head>
+<body>
+<div id="root"></div>
+
+<script type="text/babel">
+function HeroC() {
+  const tiles = ['photo-business-meeting.jpg','photo-concert-lights.jpg','photo-merch-flatlay.jpg','photo-cosmetics-pink.jpg','photo-cosmetics-mono.jpg'];
+  return (
+    <section className="c-hero" data-screen-label="01 Hero">
+      <div className="c-hero-bar">
+        <span>— ISSUE 04 / TURNING IDEAS INTO VALUE</span>
+        <span style={{color:'rgba(17,17,17,.6)'}}>EST.20XX  TOKYO  /  OEM · MD · LOGISTICS</span>
+      </div>
+      <div className="c-hero-strip">
+        <div className="c-hero-tiles">
+          {tiles.map(t => <div key={t} className="t" style={{backgroundImage:`url(${window.LM_ASSET(t)})`}}/>)}
+        </div>
+      </div>
+      <div className="c-hero-copy">
+        <h1>想いを、<br/><mark>価値あるカタチ</mark>に。</h1>
+        <div className="right">
+          <div className="en">TURNING IDEAS<br/>INTO MEANINGFUL VALUE.</div>
+          <p>企業のブランド価値を高めるオリジナルグッズを、企画から製造まで一貫してサポートします。コスト、納期、レスポンス——案件ごとの条件に合わせて、現実的な進行を設計します。</p>
+          <div className="pickup">
+            <div><small>PICK UP / 2026.04.10</small>30周年記念グッズの量産事例を公開しました</div>
+            <span className="a">→</span>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function ServiceC() {
+  const items = [
+    ['01','OEM・ODM事業','OEM / ODM','企業・ブランド向けのオリジナルグッズやノベルティを企画から製造まで一貫支援。','photo-business-meeting.jpg'],
+    ['02','MD事業','MERCHANDISING','販売・流通を前提としたMD事業として、企画性と実用性を両立した商品開発。','photo-merch-flatlay.jpg'],
+    ['03','健康サポート機器','HEALTH & APPAREL','EMS健康機器や機能性アパレルを中心に、法人向けに柔軟に対応。','photo-cosmetics-mono.jpg'],
+    ['04','倉庫・配送代行','LOGISTICS','自社通販、個人EC、同人関連販売など多様な販売形態に対応。','photo-cosmetics-pink.jpg'],
+    ['05','オンラインガチャ','ONLINE GACHA','オンライン上で楽しめるガチャ形式の販売施策で新たな販売の形を提案。','photo-friends-selfie.jpg'],
+    ['06','グラフィックデザイン','GRAPHIC DESIGN','パッケージ、グッズデザインを中心としたブランディングおよびデザイン。','photo-merch-flatlay.jpg'],
+  ];
+  return (
+    <section className="c-section" data-screen-label="03 Service">
+      <div className="c-index">— INDEX / 01  SERVICE</div>
+      <div className="c-section-head">
+        <div><h2>SERVICE</h2><div className="ja">事業内容</div></div>
+        <p className="lead">アパレル、ノベルティ、健康機器、EC施策まで。幅広く対応する総合グッズカンパニーとして、お客様のニーズにお応えします。</p>
+      </div>
+      <div className="c-svc">
+        {items.map(([n,name,en,desc,img]) => (
+          <div key={n} className="c-svc-card">
+            <div className="n">— {n}</div>
+            <div className="en">{en}</div>
+            <h3>{name}</h3>
+            <p>{desc}</p>
+            <div className="img" style={{backgroundImage:`url(${window.LM_ASSET(img)})`}}/>
+          </div>
+        ))}
+      </div>
+    </section>
+  );
+}
+
+function ReasonC() {
+  const items = [
+    ['01','SCHEDULE','納期に合わせる進行力','イベント日程や発売時期に合わせて、仕様整理から製造・納品までのスケジュールを組み立てます。短納期の案件や急な調整にも、できる限り現実的な方法を探ります。'],
+    ['02','BUDGET','予算に応じた提案力','素材、仕様、数量、製造ルートを調整し、目的とコストのバランスが取れた形をご提案します。作りたいものに対して、無理のない進め方を一緒に設計します。'],
+    ['03','RESPONSE','速く、柔軟な対応力','見積もり、仕様確認、進行中の相談までスピーディーに対応。案件ごとの条件に合わせて、製造先や現場とも連携しながら柔軟に進めます。'],
+  ];
+  return (
+    <section className="c-section" data-screen-label="04 Strengths">
+      <div className="c-index">— INDEX / 02  STRENGTHS</div>
+      <div className="c-section-head">
+        <div><h2>STRENGTHS</h2><div className="ja">ルモンズの強み</div></div>
+        <p className="lead">コスト、納期、レスポンス。<br/>案件ごとの条件に合わせて、現実的な進行と確かな納品を支えます。</p>
+      </div>
+
+      <div className="c-strengths">
+        <div className="c-strengths-rail">
+          {items.map(([n]) => <span key={n} className="c-rail-tick"/>)}
+        </div>
+        <div className="c-strengths-list">
+          {items.map(([n,en,t,d]) => (
+            <article key={n} className="c-strength">
+              <div className="c-strength-meta">
+                <span className="c-strength-counter">{n}<small>/03</small></span>
+                <span className="c-strength-en">— {en}</span>
+              </div>
+              <div className="c-strength-num" aria-hidden="true">{n}</div>
+              <div className="c-strength-body">
+                <h3>{t}</h3>
+                <p>{d}</p>
+              </div>
+            </article>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function ProductionC() {
+  const steps = [
+    ['01','企画・仕様整理','BRIEFING & SPEC','目的、数量、予算、納期、仕様を整理。グッズの方向性を一緒に固めます。','photo-business-meeting.jpg'],
+    ['02','製造・生産管理','PRODUCTION CONTROL','国内外の製造先と連携し、サンプル確認から量産までの進行を一貫管理。','photo-merch-flatlay.jpg'],
+    ['03','検品・品質確認','QUALITY INSPECTION','仕上がり、数量、不良、梱包状態を確認。出荷前のチェックを社内で完結。','photo-cosmetics-mono.jpg'],
+    ['04','梱包・配送・納品','PACKING & DELIVERY','倉庫保管、発送、イベント会場納品まで対応。販売現場まで途切れません。','photo-cosmetics-pink.jpg'],
+  ];
+  return (
+    <section className="c-section c-section--paper" data-screen-label="05 Production">
+      <div className="c-index">— INDEX / 03  PRODUCTION</div>
+      <div className="c-section-head">
+        <div><h2>PRODUCTION</h2><div className="ja">ものづくりを支える体制</div></div>
+        <p className="lead">企画・仕様整理から製造、検品、梱包、納品まで。案件ごとの条件に合わせて、品質と納期を両立できる体制を整えています。</p>
+      </div>
+      <div className="c-prod-zig">
+        <div className="c-prod-spine"/>
+        {steps.map(([n,t,en,d,img], i) => (
+          <article key={n} className={`c-prod-zig-row ${i % 2 === 0 ? 'l' : 'r'}`}>
+            <div className="c-prod-zig-photo" style={{backgroundImage:`url(${window.LM_ASSET(img)})`}}>
+              <span className="c-prod-zig-cap">— {en}</span>
+            </div>
+            <div className="c-prod-zig-pin"><span>{n}</span></div>
+            <div className="c-prod-zig-body">
+              <div className="c-prod-zig-en">STEP {n} / 04</div>
+              <h3>{t}</h3>
+              <p>{d}</p>
+            </div>
+          </article>
+        ))}
+      </div>
+    </section>
+  );
+}
+
+function NewsCardC({img,category,title,date}) {
+  return (
+    <div className="lm-news-card" style={{backgroundImage:`url(${window.LM_ASSET(img)})`}}>
+      <div className="label"><span className="eyebrow">{category}</span><span className="title">{title}</span><span className="date">{date}</span></div>
+      <span className="arrow">→</span>
+    </div>
+  );
+}
+
+function WorksC() {
+  return (
+    <section className="c-section" data-screen-label="06 Works">
+      <div className="c-index">— INDEX / 04  WORKS</div>
+      <div className="c-section-head">
+        <div><h2>WORKS</h2><div className="ja">制作実績</div></div>
+        <p className="lead">イベント、エンタメ、企業販促、健康関連商品など、幅広い領域の制作に対応しています。</p>
+      </div>
+      <div className="c-works-main" style={{backgroundImage:'url(${window.LM_ASSET('photo-concert-lights.jpg')})'}}>
+        <div className="info"><span className="cat">EVENT / LIVE — 2026.04.10</span><span className="ttl">某ライブ公演向けグッズ制作</span><span className="date">CASE / 001</span></div>
+      </div>
+      <div className="c-works-grid">
+        <NewsCardC img="photo-cosmetics-pink.jpg" category="COSMETICS" title="新コスメブランドのパッケージ設計" date="2026.03.22"/>
+        <NewsCardC img="photo-cosmetics-mono.jpg" category="PACKAGE RENEWAL" title="既存パッケージのリニューアル" date="2026.02.15"/>
+        <NewsCardC img="photo-merch-flatlay.jpg"  category="APPAREL / MD" title="販売用アパレル商品の量産対応" date="2026.01.30"/>
+        <NewsCardC img="photo-friends-selfie.jpg" category="PROMOTION" title="プロモーション施策ノベルティ" date="2025.12.18"/>
+      </div>
+      <div style={{marginTop: 56, display:'flex', justifyContent:'flex-end'}}>
+        <button className="lm-pill-large">制作実績を見る</button>
+      </div>
+    </section>
+  );
+}
+
+function CompanyC() {
+  const rows = [
+    ['NAME','株式会社ルモンズエンターテインメント'],
+    ['LOCATION','東京都新宿区◯◯町 0-0-0 ルモンズビル 3F'],
+    ['CEO','代表取締役 ◯◯ ◯◯'],
+    ['BUSINESS','OEM・ODM／MD／健康サポート機器／倉庫・配送代行／オンラインガチャ／グラフィックデザイン'],
+    ['FOUNDED','20XX 年 X 月'],
+  ];
+  return (
+    <section className="c-section" data-screen-label="07 Company">
+      <div className="c-index">— INDEX / 05  COMPANY</div>
+      <div className="c-section-head">
+        <div><h2>COMPANY</h2><div className="ja">会社情報</div></div>
+        <p className="lead">グッズ制作・MD・物流・オンライン施策を通じて、企業や事業者のものづくりを支援しています。</p>
+      </div>
+      <div className="c-company">
+        <div className="intro">
+          <p>株式会社ルモンズエンターテインメントは、グッズ制作・MD・物流・オンライン施策を通じて、企業や事業者のものづくりを支援しています。</p>
+          <p>企画・仕様整理から、製造・検品・配送・販売現場での納品まで、ジャンルを問わず現場の条件に合わせた提案と進行を心がけています。</p>
+          <button className="lm-pill-outline" style={{width:280,height:64,marginTop:16}}>
+            <span>会社概要を見る</span><span className="circle">→</span>
+          </button>
+        </div>
+        <div className="table">
+          <dl>{rows.map(([k,v]) => (<React.Fragment key={k}><dt>{k}</dt><dd>{v}</dd></React.Fragment>))}</dl>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function ContactC() {
+  const topics = ['企画・仕様の相談','見積もり依頼','サンプルについて','量産について','検品・納品条件の相談'];
+  return (
+    <section className="c-section c-section--dark" data-screen-label="08 Contact">
+      <div className="c-index">— INDEX / 06  CONTACT</div>
+      <div className="c-section-head">
+        <div><h2>CONTACT</h2><div className="ja">お問い合わせ</div></div>
+        <p className="lead">グッズ制作、MD、配送、オンライン施策など、まずはお気軽にご相談ください。初回ご相談は無料、専任担当が条件整理からお手伝いします。</p>
+      </div>
+      <div className="c-contact">
+        <div>
+          <div style={{font:'700 12px/1 var(--font-en)',letterSpacing:'.22em',color:'rgba(244,244,244,.7)',marginBottom:18}}>— TOPICS</div>
+          <div className="chips">{topics.map(t => <span key={t} className="chip">{t}</span>)}</div>
+        </div>
+        <div className="ctas">
+          <button className="c-contact-btn c-contact-btn--p"><span>お問い合わせする</span><span>→</span></button>
+          <button className="c-contact-btn c-contact-btn--s"><span>見積もりを相談する</span><span>→</span></button>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function FooterC() {
+  const groups = [
+    ['SERVICE',['OEM・ODM','MD','健康サポート機器','倉庫・配送代行','オンラインガチャ','グラフィックデザイン']],
+    ['COMPANY',['会社概要','ルモンズの強み','制作実績','お知らせ','採用情報']],
+    ['CONTACT',['お問い合わせ','見積もり依頼','資料ダウンロード']],
+  ];
+  return (
+    <footer style={{
+      background:'#0E0E0E', color:'#F4F4F4', padding:'120px 100px 40px',
+      position:'relative', overflow:'hidden',
+    }}>
+      {/* film perforations top */}
+      <div aria-hidden="true" style={{
+        position:'absolute', left:0, right:0, top:0, height: 18,
+        backgroundImage:'repeating-linear-gradient(90deg, #F4F4F4 0 18px, transparent 18px 42px)',
+        backgroundSize:'42px 18px', opacity:.16,
+      }}/>
+
+      {/* Marquee credits row */}
+      <div style={{
+        display:'grid', gridTemplateColumns:'auto 1fr auto', alignItems:'center', gap: 32,
+        paddingBottom: 24, borderBottom:'1px solid rgba(244,244,244,.18)',
+        font:'700 12px/1 var(--font-en)', letterSpacing:'.24em', color:'rgba(244,244,244,.65)',
+      }}>
+        <span>— END CREDITS</span>
+        <span style={{textAlign:'center'}}>ROLL · 2026 / TOKYO · TURNING IDEAS INTO MEANINGFUL VALUE · LEMONDS ENTERTAINMENT</span>
+        <span style={{textAlign:'right'}}>SCENE 09 / FIN</span>
+      </div>
+
+      {/* CTA card */}
+      <div style={{display:'grid', gridTemplateColumns:'1fr 1fr', gap: 80, padding:'80px 0', borderBottom:'1px solid rgba(244,244,244,.18)', alignItems:'end'}}>
+        <div>
+          <div style={{font:'700 12px/1 var(--font-en)', letterSpacing:'.22em', color:'rgba(244,244,244,.7)'}}>— PRODUCED BY</div>
+          <h3 style={{font:'700 72px/1.2 var(--font-jp)', letterSpacing:'.04em', margin:'18px 0 0'}}>
+            次の現場、<br/>一緒に作りませんか。
+          </h3>
+        </div>
+        <div style={{display:'flex', flexDirection:'column', gap: 14, alignItems:'flex-end'}}>
+          <p style={{font:'400 15px/1.95 var(--font-jp)', letterSpacing:'.04em', color:'rgba(244,244,244,.78)', margin:0, maxWidth: 540, textAlign:'right'}}>
+            グッズ制作、MD、配送、オンライン施策まで。<br/>初回相談は無料、専任担当が条件整理からお手伝いします。
+          </p>
+          <div style={{display:'flex', gap: 12, marginTop: 8}}>
+            <button style={{background:'#F4F4F4', color:'#111', border:0, padding:'20px 32px', borderRadius:24, font:'700 16px/1 var(--font-jp)', letterSpacing:'.08em', cursor:'pointer'}}>お問い合わせ →</button>
+            <button style={{background:'transparent', color:'#F4F4F4', border:'1px solid rgba(244,244,244,.4)', padding:'20px 32px', borderRadius:24, font:'700 16px/1 var(--font-jp)', letterSpacing:'.08em', cursor:'pointer'}}>見積もり依頼 →</button>
+          </div>
+        </div>
+      </div>
+
+      {/* Sitemap */}
+      <div style={{display:'grid', gridTemplateColumns:'1.4fr repeat(3, 1fr)', gap: 64, padding:'72px 0 40px'}}>
+        <div>
+          <div style={{font:'700 12px/1 var(--font-en)', letterSpacing:'.24em', color:'rgba(244,244,244,.55)'}}>— STUDIO</div>
+          <p style={{font:'500 14px/1.84 var(--font-jp)', letterSpacing:'.04em', margin:'18px 0 0', color:'rgba(244,244,244,.85)'}}>
+            〒000-0000<br/>東京都新宿区◯◯町 0-0-0<br/>ルモンズビル 3F
+          </p>
+          <div style={{font:'700 12px/1 var(--font-en)', letterSpacing:'.24em', color:'rgba(244,244,244,.55)', marginTop: 32}}>— CONTACT</div>
+          <p style={{font:'500 14px/1.84 var(--font-jp)', letterSpacing:'.04em', margin:'18px 0 0', color:'rgba(244,244,244,.85)'}}>
+            TEL  03-0000-0000<br/>MAIL  contact@lemonds.example
+          </p>
+        </div>
+        {groups.map(([h, items], gi) => (
+          <div key={h}>
+            <div style={{
+              display:'flex', alignItems:'baseline', justifyContent:'space-between',
+              padding:'0 0 14px', borderBottom:'1px solid rgba(244,244,244,.32)',
+              font:'700 12px/1 var(--font-en)', letterSpacing:'.24em', color:'rgba(244,244,244,.7)',
+            }}>
+              <span>— {h}</span>
+              <span style={{color:'rgba(244,244,244,.4)'}}>0{gi+1}</span>
+            </div>
+            <ul style={{margin:'14px 0 0', padding:0, listStyle:'none', display:'flex', flexDirection:'column', gap: 10}}>
+              {items.map(it => (
+                <li key={it} style={{font:'500 14px/1.4 var(--font-jp)', letterSpacing:'.04em'}}>
+                  <a href="#" style={{color:'rgba(244,244,244,.92)', textDecoration:'none'}}>{it}</a>
+                </li>
+              ))}
+            </ul>
+          </div>
+        ))}
+      </div>
+
+      {/* huge wordmark FIN */}
+      <div style={{display:'grid', gridTemplateColumns:'1fr auto', alignItems:'end', paddingTop: 40, borderTop:'1px solid rgba(244,244,244,.32)'}}>
+        <div aria-hidden="true" style={{
+          font:'700 200px/.85 var(--font-en)', letterSpacing:'-.02em',
+          color:'#F4F4F4',
+        }}>
+          LEMONDS<span style={{color:'rgba(244,244,244,.22)'}}>.</span>
+        </div>
+        <div style={{textAlign:'right', font:'500 11px/1.6 var(--font-en)', letterSpacing:'.18em', color:'rgba(244,244,244,.55)'}}>
+          ENTERTAINMENT Co.,Ltd<br/>
+          © 2026 ALL RIGHTS RESERVED
+        </div>
+      </div>
+
+      {/* legal */}
+      <div style={{
+        marginTop: 32, paddingTop: 18, borderTop:'1px solid rgba(244,244,244,.18)',
+        display:'flex', justifyContent:'space-between',
+        font:'500 11px/1 var(--font-en)', letterSpacing:'.18em', color:'rgba(244,244,244,.55)',
+      }}>
+        <span>RUNNING TIME · 2026 · TOKYO</span>
+        <span style={{display:'flex', gap: 24}}>
+          <a href="#" style={{color:'inherit', textDecoration:'none'}}>PRIVACY POLICY</a>
+          <a href="#" style={{color:'inherit', textDecoration:'none'}}>TERMS</a>
+          <a href="#" style={{color:'inherit', textDecoration:'none'}}>SITEMAP</a>
+        </span>
+      </div>
+
+      {/* film perforations bottom */}
+      <div aria-hidden="true" style={{
+        position:'absolute', left:0, right:0, bottom:0, height: 18,
+        backgroundImage:'repeating-linear-gradient(90deg, #F4F4F4 0 18px, transparent 18px 42px)',
+        backgroundSize:'42px 18px', opacity:.16,
+      }}/>
+    </footer>
+  );
+}
+
+function App() {
+  return (
+    <>
+      <Header/>
+      <HeroC/>
+      <ServiceC/>
+      <ReasonC/>
+      <ProductionC/>
+      <WorksC/>
+      <CompanyC/>
+      <ContactC/>
+      <FooterC/>
+    </>
+  );
+}
+ReactDOM.createRoot(document.getElementById('root')).render(<App/>);
+
+const fitPage = () => {
+  const w = document.documentElement.clientWidth;
+  const scale = Math.min(1, w / 1920);
+  const root = document.getElementById('root');
+  root.style.setProperty('--page-scale', scale);
+  document.body.style.height = (root.getBoundingClientRect().height) + 'px';
+};
+window.addEventListener('resize', fitPage);
+requestAnimationFrame(fitPage);
+window.addEventListener('load', fitPage);
+setTimeout(fitPage, 300);
+setTimeout(fitPage, 1200);
+</script>
+</body>
+</html>
