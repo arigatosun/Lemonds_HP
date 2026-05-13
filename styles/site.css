@@ -1982,6 +1982,10 @@ html body {
     gap: 10px;
   }
 
+  .lm-philosophy .portrait {
+    aspect-ratio: 16 / 10;
+  }
+
   .lm-company-table dd,
   .lm-map .addr .v {
     overflow-wrap: anywhere;
@@ -2064,43 +2068,78 @@ html body {
   }
 
   .lm-about-collage {
-    height: 500px;
-    margin-top: 34px;
+    height: 470px;
+    margin-top: 28px;
+  }
+
+  .lm-about-body .copy p {
+    font-size: 14px;
+    line-height: 1.9;
+    margin-bottom: 20px;
   }
 
   .lm-about-collage__tile--edge {
-    width: 118px;
-    height: 142px;
-    left: -68px;
-    top: 96px;
+    width: 98px;
+    height: 118px;
+    left: -58px;
+    top: 92px;
   }
 
   .lm-about-collage__tile--left {
-    width: 230px;
-    height: 140px;
-    left: 20px;
-    top: 302px;
+    width: 214px;
+    height: 130px;
+    left: 4px;
+    top: 278px;
   }
 
   .lm-about-collage__tile--center {
-    width: 238px;
-    height: 150px;
-    left: 116px;
-    top: 202px;
+    width: 260px;
+    height: 164px;
+    left: 90px;
+    top: 164px;
   }
 
   .lm-about-collage__tile--right {
-    width: 230px;
-    height: 104px;
-    left: 130px;
+    width: 238px;
+    height: 108px;
+    left: 112px;
     top: 0;
   }
 
   .lm-about-collage__tile--large {
-    width: 260px;
-    height: 176px;
+    width: 254px;
+    height: 172px;
     left: 96px;
-    top: 338px;
+    top: 298px;
+  }
+
+  .lm-company-table .row {
+    padding: 20px 0;
+  }
+
+  .lm-company-table dt {
+    font-size: 12px;
+  }
+
+  .lm-company-table dd {
+    font-size: 15px;
+    line-height: 1.7;
+  }
+
+  .lm-philosophy .msg p {
+    font-size: 14px;
+    line-height: 1.9;
+  }
+
+  .lm-philosophy .sign {
+    flex-wrap: wrap;
+    gap: 10px 16px;
+  }
+
+  .lm-map .map-area .placeholder {
+    max-width: 240px;
+    text-align: center;
+    line-height: 1.5;
   }
 
   .lm-map .map-area {
@@ -2141,6 +2180,24 @@ html body {
   .lm-svc-detail .body .body-copy {
     font-size: 14px;
     line-height: 1.9;
+  }
+
+  .lm-philosophy {
+    grid-template-columns: minmax(0, .9fr) minmax(0, 1.1fr);
+    gap: 48px;
+  }
+
+  .lm-philosophy .portrait {
+    aspect-ratio: 4 / 3;
+  }
+
+  .lm-map {
+    grid-template-columns: minmax(0, 1.35fr) minmax(0, .9fr);
+    gap: 40px;
+  }
+
+  .lm-map .map-area {
+    aspect-ratio: 4 / 3;
   }
 }
 
