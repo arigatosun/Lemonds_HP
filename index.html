@@ -60,9 +60,14 @@ ReactDOM.createRoot(document.getElementById('root')).render(<App/>);
 // ── 1920基準のレイアウトを、ビューポート幅に等比でフィット
 const fitPage = () => {
   const w = document.documentElement.clientWidth;
-  const scale = Math.min(1, w / 1920);
   const root = document.getElementById('root');
   const stage = document.getElementById('stage');
+  if (w <= 1024) {
+    root.style.setProperty('--page-scale', 1);
+    stage.style.removeProperty('--page-height');
+    return;
+  }
+  const scale = Math.min(1, w / 1920);
   root.style.setProperty('--page-scale', scale);
   // scale 前の root 自然高さ × scale を stage 高さに反映
   const naturalH = root.offsetHeight; // transform は offsetHeight に影響しない
