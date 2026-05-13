@@ -33,7 +33,7 @@ function Company() {
             企画・仕様整理から、製造・検品・配送・販売現場での納品まで。<br/>
             ジャンルを問わず、現場の条件に合わせた提案と進行を心がけています。
           </p>
-          <button className="lm-pill-outline" style={{marginTop: 24, width:280, height:60}}>
+          <button className="lm-pill-outline lm-pill-outline--section-action">
             <span>会社概要を見る</span><span className="circle">→</span>
           </button>
         </div>

@@ -27,10 +27,10 @@ function ContactCTA() {
           </div>
         </div>
         <div className="ctas">
-          <a href="contact.html?type=quote" className="lm-contact-btn lm-contact-btn--primary" style={{textDecoration:'none'}}>
+          <a href="contact.html?type=quote" className="lm-contact-btn lm-contact-btn--primary">
             <span>見積もりを依頼する</span><span className="arrow">→</span>
           </a>
-          <a href="contact.html" className="lm-contact-btn lm-contact-btn--secondary" style={{textDecoration:'none'}}>
+          <a href="contact.html" className="lm-contact-btn lm-contact-btn--secondary">
             <span>お問い合わせをする</span><span className="arrow">→</span>
           </a>
         </div>

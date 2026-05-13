@@ -6,7 +6,7 @@ function CompanyPage() {
       <Breadcrumb trail={[{label:'トップ', href:'index.html'}, {label:'会社概要'}]}/>
 
       {/* About us */}
-      <section className="lm-section" data-screen-label="About">
+      <section className="lm-section lm-company-about" data-screen-label="About">
         <div className="lm-section-head">
           <div>
             <h2>ABOUT US</h2>
@@ -21,9 +21,12 @@ function CompanyPage() {
             <p>アーティストのツアーグッズをはじめとした多様な商品制作で培った経験とノウハウを活かし、企画性・実用性・品質のバランスを重視した「使われること」を前提としたものづくりを行っています。</p>
             <p>企画提案から設計、量産、納品までをワンストップで対応し、小ロットから量産まで、用途や目的に応じた柔軟な生産体制を構築。国内外の工場ネットワークと独自の品質チェック体制により、安定した品質と納期管理を実現しています。</p>
           </div>
-          <div className="visual">
-            <div className="ph" style={{backgroundImage:'url(assets/photo-business-meeting.jpg)'}}/>
-            <div className="ph small" style={{backgroundImage:'url(assets/photo-merch-flatlay.jpg)'}}/>
+          <div className="lm-about-collage" aria-hidden="true">
+            <div className="lm-about-collage__tile lm-about-collage__tile--edge" style={{backgroundImage:'url(assets/about-product-samples.png)'}}/>
+            <div className="lm-about-collage__tile lm-about-collage__tile--left" style={{backgroundImage:'url(assets/photo-merch-flatlay.jpg)'}}/>
+            <div className="lm-about-collage__tile lm-about-collage__tile--center" style={{backgroundImage:'url(assets/photo-business-meeting.jpg)'}}/>
+            <div className="lm-about-collage__tile lm-about-collage__tile--right" style={{backgroundImage:'url(assets/about-fulfillment-work.png)'}}/>
+            <div className="lm-about-collage__tile lm-about-collage__tile--large" style={{backgroundImage:'url(assets/about-goods-planning.png)'}}/>
           </div>
         </div>
       </section>

@@ -13,11 +13,11 @@ function Hero() {
 
   // Replicates Figma "Union": rounded rect with a top-right rectangular notch
   // (where the PICK UP card overlaps). Coordinates are within the 1760×760 box.
-  const clipPath = `path('M 48 0 L 1712 0 C 1738.51 0 1760 21.49 1760 48 L 1760 152 \
-    C 1760 178.51 1738.51 200 1712 200 L 1365 200 L 1365 336 L 1212 336 \
+  const clipPath = `path('M 44 0 L 1760 0 L 1760 200 \
+    L 1365 200 L 1365 336 L 1212 336 \
     C 1207.13 336 1202.43 335.27 1198 333.92 L 1198 712 \
-    C 1198 738.51 1176.51 760 1150 760 L 48 760 \
-    C 21.49 760 0 738.51 0 712 L 0 48 C 0 21.49 21.49 0 48 0 Z')`;
+    C 1198 736.3 1178.3 760 1154 760 L 44 760 \
+    C 19.7 760 0 740.3 0 716 L 0 44 C 0 19.7 19.7 0 44 0 Z')`;
 
   // Two-row photo grid that fills the 1760×760 mask. Top row = 3 wide tiles, bottom row = 5 narrower tiles.
   const TOP = [
@@ -93,7 +93,7 @@ function Hero() {
       }}>
         <div style={{
           position:'absolute', left: 44, top: 44, width: 518, height: 518,
-          background:'#fff', borderRadius: 48,
+          background:'#fff', borderRadius: 32,
           padding: 40, boxSizing:'border-box', display:'flex', flexDirection:'column',
         }}>
           <div style={{display:'flex', alignItems:'flex-start', justifyContent:'space-between'}}>

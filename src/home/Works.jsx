@@ -1,11 +1,12 @@
 // Works.jsx — WORKS / 制作実績 (B-variant: header + 5 NewsCards + CTA)
 function NewsCard({ img, title, category, date, copy }) {
   return (
-    <div className="lm-news-card" style={{backgroundImage:`url(assets/${img})`}}>
+    <div className="lm-news-card">
+      <div className="lm-news-card__image" style={{backgroundImage:`url(assets/${img})`}}/>
       <div className="label">
         <span className="eyebrow">{category}</span>
         <span className="title">{title}</span>
-        {copy && <span className="copy" style={{font:'400 12px/1.6 var(--font-jp)', letterSpacing:'.04em', color:'rgba(17,17,17,.7)', marginTop:4}}>{copy}</span>}
+        {copy && <span className="copy">{copy}</span>}
         <span className="date">{date}</span>
       </div>
       <span className="arrow">→</span>
@@ -39,15 +40,17 @@ function Works() {
         </p>
       </div>
 
-      <div style={{display:'grid', gridTemplateColumns:'repeat(3,1fr)', gap: 32}}>
+      <div className="lm-grid lm-grid--3">
         {items.slice(0,3).map(i => <NewsCard key={i.title} {...i}/>)}
       </div>
-      <div style={{display:'grid', gridTemplateColumns:'repeat(2,1fr)', gap: 32, marginTop: 32}}>
+      <div className="lm-grid lm-grid--2 lm-grid--works-secondary">
         {items.slice(3).map(i => <NewsCard key={i.title} {...i}/>)}
       </div>
 
-      <div style={{marginTop: 56, display:'flex', justifyContent:'center'}}>
-        <button className="lm-pill-large">制作実績を見る</button>
+      <div className="lm-section-action lm-section-action--center">
+        <button className="lm-pill-outline lm-pill-outline--section-action">
+          <span>制作実績を見る</span><span className="circle">→</span>
+        </button>
       </div>
     </section>
   );

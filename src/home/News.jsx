@@ -32,8 +32,10 @@ function News() {
         ))}
       </ul>
 
-      <div style={{marginTop: 56, display:'flex', justifyContent:'center'}}>
-        <button className="lm-pill-large">お知らせ一覧を見る</button>
+      <div className="lm-section-action lm-section-action--center">
+        <button className="lm-pill-outline lm-pill-outline--section-action">
+          <span>お知らせ一覧を見る</span><span className="circle">→</span>
+        </button>
       </div>
     </section>
   );
