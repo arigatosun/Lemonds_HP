@@ -24,7 +24,7 @@ function NewsPage() {
         lead="新規取り扱い商品やプロジェクトリリース、休業日のご案内など、ルモンズエンターテインメントからのお知らせを掲載しています。"
       />
 
-      <section className="lm-section" style={{paddingTop: 0, paddingBottom: 56}}>
+      <section className="lm-section lm-news-filter-section">
         <div className="lm-works-filter">
           {cats.map(c => (
             <button key={c} className={`chip ${filter === c ? 'is-on' : ''}`} onClick={() => setFilter(c)}>
@@ -35,7 +35,7 @@ function NewsPage() {
         </div>
       </section>
 
-      <section className="lm-section" style={{paddingTop: 0}}>
+      <section className="lm-section lm-news-list-section">
         <ul className="lm-news-list">
           {list.map(it => (
             <li key={it.slug} className="lm-news-row" onClick={() => location.href = `news-detail.html?slug=${it.slug}`}>

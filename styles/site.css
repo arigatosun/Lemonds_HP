@@ -513,6 +513,19 @@ html body {
 }
 .lm-news-row:hover .arrow { background: #111111; color: #F4F4F4; transform: translateX(2px); }
 
+.lm-news-filter-section {
+  padding-top: 0;
+  padding-bottom: 16px;
+}
+
+.lm-news-list-section {
+  padding-top: 0;
+}
+
+.lm-news-list-section .lm-news-list {
+  border-top: 0;
+}
+
 /* ──────────────────────────────────────────────────────────────
    下層ページ共通: パンくず
    ────────────────────────────────────────────────────────────── */
@@ -1514,9 +1527,24 @@ html body {
   .lm-track-marker .lm-track-line-after { display: none; }
 
   .lm-news-row {
-    grid-template-columns: 120px 110px 1fr 40px;
+    grid-template-columns: 120px 110px 1fr 38px;
     gap: 20px;
     padding: 24px 0;
+  }
+
+  .lm-news-row .arrow {
+    width: 38px;
+    height: 38px;
+    font-size: 15px;
+  }
+
+  .lm-news-filter-section {
+    padding-top: 0;
+    padding-bottom: 14px;
+  }
+
+  .lm-news-list-section {
+    padding-top: 0;
   }
 
   .lm-news-row:hover {
@@ -1734,18 +1762,28 @@ html body {
   }
 
   .lm-news-card .arrow {
-    right: 16px;
-    bottom: 16px;
-    width: 38px;
-    height: 38px;
+    right: 14px;
+    bottom: 14px;
+    width: 34px;
+    height: 34px;
+    font-size: 15px;
     background: #9F9F9F;
     box-shadow: 0 10px 24px rgba(17,17,17,.16);
   }
 
   .lm-news-row {
-    grid-template-columns: 1fr 38px;
+    grid-template-columns: 1fr 34px;
     gap: 10px 16px;
-    padding: 22px 0;
+    padding: 24px 0;
+  }
+
+  .lm-news-filter-section {
+    padding-top: 0;
+    padding-bottom: 12px;
+  }
+
+  .lm-news-list-section {
+    padding-top: 0;
   }
 
   .lm-news-row .date,
@@ -1753,15 +1791,40 @@ html body {
     grid-column: 1;
   }
 
+  .lm-news-row .date {
+    font-size: 14px;
+    letter-spacing: .18em;
+  }
+
+  .lm-news-row .cat {
+    width: fit-content;
+    height: 30px;
+    padding: 0 14px;
+  }
+
   .lm-news-row .title {
     grid-column: 1;
     font-size: 15px;
+    line-height: 1.62;
   }
 
   .lm-news-row .arrow {
     grid-column: 2;
     grid-row: 1 / span 3;
     align-self: center;
+    width: 34px;
+    height: 34px;
+    font-size: 14px;
+  }
+
+  .lm-pagination {
+    margin-top: 44px;
+    gap: 8px;
+  }
+
+  .lm-pagination .page {
+    width: 42px;
+    height: 42px;
   }
 
   .lm-co-mosaic {
@@ -1823,6 +1886,13 @@ html body {
     padding: 0 22px;
     border-radius: 20px;
     font-size: 15px;
+  }
+
+  .lm-contact-btn .arrow {
+    width: 38px;
+    height: 38px;
+    flex: 0 0 38px;
+    font-size: 16px;
   }
 
   .lm-home-contact__info {
@@ -1931,6 +2001,12 @@ html body {
 
   .lm-contact .ctas {
     max-width: 560px;
+  }
+
+  .lm-contact-btn .arrow {
+    width: 40px;
+    height: 40px;
+    font-size: 17px;
   }
 
   .lm-svc-index {
@@ -2089,8 +2165,9 @@ html body {
   .lm-work-card .thumb .arrow {
     right: 14px;
     bottom: 14px;
-    width: 38px;
-    height: 38px;
+    width: 34px;
+    height: 34px;
+    font-size: 14px;
   }
 
   .lm-work-card .t {
@@ -2271,6 +2348,41 @@ html body {
 }
 
 @media (max-width: 768px) {
+  .lm-news-row {
+    grid-template-columns: auto minmax(0, 1fr) 34px;
+    gap: 10px 16px;
+    align-items: start;
+  }
+
+  .lm-news-row .date {
+    grid-column: 1;
+    grid-row: 1;
+    min-height: 30px;
+    display: inline-flex;
+    align-items: center;
+    align-self: center;
+  }
+
+  .lm-news-row .cat {
+    grid-column: 2;
+    grid-row: 1;
+    align-self: center;
+  }
+
+  .lm-news-row .title {
+    grid-column: 1 / span 2;
+    grid-row: 2;
+  }
+
+  .lm-news-row .arrow {
+    grid-column: 3;
+    grid-row: 2;
+    align-self: center;
+    width: 34px;
+    height: 34px;
+    font-size: 14px;
+  }
+
   .lm-hero__sp-break {
     display: block;
   }
