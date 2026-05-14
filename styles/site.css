@@ -1158,16 +1158,82 @@ html body {
 .lm-company .table dt { font: 500 13px/1.6 var(--font-jp); letter-spacing: 0.12em; color: rgba(17,17,17,.55); margin: 0; }
 .lm-company .table dd { font: 500 15px/1.6 var(--font-jp); letter-spacing: 0.04em; color:#111111; margin: 0; }
 
-/* ── CONTACT: dark CTA panel ─────────────────────────────────── */
-.lm-contact { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: start; }
-.lm-contact .copy { font: 400 16px/1.95 var(--font-jp); letter-spacing: 0.04em; color: rgba(244,244,244,.88); margin: 0 0 40px; }
-.lm-contact .chips { display:flex; flex-wrap: wrap; gap: 12px; margin-bottom: 8px; }
-.lm-contact .chip {
-  display:inline-flex; align-items:center; height: 44px; padding: 0 22px;
-  border-radius: 9999px; border: 1px solid rgba(244,244,244,.32);
-  font: 500 14px/1 var(--font-jp); letter-spacing: 0.06em; color: rgba(244,244,244,.92);
+/* ── CONTACT: lower dark split panel ─────────────────────────── */
+.lm-contact-cta {
+  background: #111111;
+  padding-top: 80px;
+  padding-bottom: 80px;
 }
-.lm-contact .ctas { display:flex; flex-direction:column; gap: 16px; }
+.lm-contact-cta__panel {
+  display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 0;
+  border-radius: 32px 32px 32px 0; overflow: hidden;
+  background: #111111;
+}
+.lm-contact-cta__photo {
+  position: relative; min-height: 560px;
+  background:
+    linear-gradient(180deg, rgba(17,17,17,.12), rgba(17,17,17,.46)),
+    url(../assets/top-contact-consultation.jpg) center/cover;
+}
+.lm-contact-cta__badge {
+  position: absolute; top: 32px; left: 32px;
+  background: #F4F4F4; color: #111111; padding: 10px 18px; border-radius: 9999px;
+  font: 700 12px/1 var(--font-en); letter-spacing: .22em;
+}
+.lm-contact-cta__caption {
+  position: absolute; left: 40px; bottom: 40px; color: #F4F4F4;
+  text-shadow: 0 1px 24px rgba(0,0,0,.55); max-width: 440px;
+}
+.lm-contact-cta__caption-k {
+  font: 700 11px/1 var(--font-en); letter-spacing: .22em; opacity: .9;
+}
+.lm-contact-cta__caption-title {
+  font: 700 32px/1.4 var(--font-jp); letter-spacing: .06em; margin-top: 10px;
+}
+.lm-contact-cta__body {
+  padding: 64px 68px; display: flex; flex-direction: column; gap: 20px;
+}
+.lm-contact-cta__eyebrow {
+  font: 700 12px/1 var(--font-en); letter-spacing: .24em; color: rgba(244,244,244,.52);
+}
+.lm-contact-cta__title {
+  font: 700 88px/1 var(--font-en); letter-spacing: .01em; color: #F4F4F4; margin: 0;
+}
+.lm-contact-cta__ja {
+  font: 700 22px/1 var(--font-jp); letter-spacing: .12em; color: #F4F4F4; margin-top: 14px;
+}
+.lm-contact-cta__copy {
+  font: 400 16px/1.95 var(--font-jp); letter-spacing: .04em;
+  color: rgba(244,244,244,.78); max-width: 520px; margin: 0;
+}
+.lm-contact-cta__copy-unit {
+  display: inline-block;
+}
+.lm-contact-cta__actions {
+  display: flex; flex-direction: column; gap: 12px; margin-top: 4px;
+}
+.lm-contact-cta .lm-contact-btn {
+  height: 76px;
+  padding: 0 32px;
+  border-radius: 22px;
+  font-size: 18px;
+  width: 100%;
+}
+.lm-contact-cta .lm-contact-btn .arrow {
+  width: 38px;
+  height: 38px;
+  flex: 0 0 38px;
+}
+.lm-contact-cta__info {
+  display: flex; gap: 48px; margin-top: 10px; padding-top: 20px;
+  border-top: 1px solid rgba(244,244,244,.18);
+}
+.lm-contact-cta__info-label {
+  font: 700 12px/1 var(--font-en); letter-spacing: .24em; color: rgba(244,244,244,.52);
+}
+.lm-contact-cta__info-value {
+  font: 700 18px/1 var(--font-en); letter-spacing: .04em; color: #F4F4F4; margin-top: 8px;
+}
 .lm-contact-btn {
   display:flex; align-items:center; justify-content:space-between;
   height: 88px; padding: 0 36px; border-radius: 24px; border: 0; cursor:pointer;
@@ -1645,16 +1711,38 @@ html body {
     grid-template-columns: 1fr;
   }
 
+  .lm-contact-cta__panel {
+    grid-template-columns: 1fr;
+    border-radius: 32px;
+  }
+
+  .lm-contact-cta {
+    padding-top: 60px;
+    padding-bottom: 60px;
+  }
+
   .lm-home-contact__photo {
     min-height: 420px;
+  }
+
+  .lm-contact-cta__photo {
+    min-height: 360px;
   }
 
   .lm-home-contact__body {
     padding: 48px;
   }
 
+  .lm-contact-cta__body {
+    padding: 42px;
+  }
+
   .lm-home-contact__title {
     font-size: 72px;
+  }
+
+  .lm-contact-cta__title {
+    font-size: 64px;
   }
 
   .lm-footer {
@@ -1933,7 +2021,22 @@ html body {
     min-height: 320px;
   }
 
+  .lm-contact-cta {
+    padding-top: 48px;
+    padding-bottom: 48px;
+  }
+
+  .lm-contact-cta__photo {
+    min-height: 280px;
+  }
+
   .lm-home-contact__caption {
+    left: 24px;
+    right: 24px;
+    bottom: 24px;
+  }
+
+  .lm-contact-cta__caption {
     left: 24px;
     right: 24px;
     bottom: 24px;
@@ -1943,15 +2046,31 @@ html body {
     font-size: 22px;
   }
 
+  .lm-contact-cta__caption-title {
+    font-size: 22px;
+  }
+
   .lm-home-contact__body {
     padding: 34px 26px;
+  }
+
+  .lm-contact-cta__body {
+    padding: 30px 26px;
   }
 
   .lm-home-contact__title {
     font-size: 46px;
   }
 
+  .lm-contact-cta__title {
+    font-size: 44px;
+  }
+
   .lm-home-contact__ja {
+    font-size: 16px;
+  }
+
+  .lm-contact-cta__ja {
     font-size: 16px;
   }
 
@@ -1970,6 +2089,11 @@ html body {
   }
 
   .lm-home-contact__info {
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .lm-contact-cta__info {
     flex-direction: column;
     gap: 20px;
   }
@@ -2061,20 +2185,6 @@ html body {
     min-height: 28px;
     line-height: 1.15;
     white-space: normal;
-  }
-
-  .lm-contact {
-    grid-template-columns: 1fr;
-    gap: 36px;
-  }
-
-  .lm-contact .copy {
-    max-width: 720px;
-    margin-bottom: 28px;
-  }
-
-  .lm-contact .ctas {
-    max-width: 560px;
   }
 
   .lm-contact-btn .arrow {
@@ -2406,36 +2516,6 @@ html body {
   .lm-work-card .c {
     font-size: 14px;
     line-height: 1.8;
-  }
-
-  .lm-contact {
-    gap: 28px;
-  }
-
-  .lm-contact .copy {
-    margin-bottom: 24px;
-    font-size: 14px;
-    line-height: 1.9;
-  }
-
-  .lm-contact .copy br {
-    display: none;
-  }
-
-  .lm-contact .chips {
-    gap: 8px;
-  }
-
-  .lm-contact .chip {
-    height: 38px;
-    padding: 0 16px;
-    font-size: 12px;
-    letter-spacing: .04em;
-  }
-
-  .lm-contact .ctas {
-    max-width: none;
-    gap: 12px;
   }
 
   .lm-svc-index a {
