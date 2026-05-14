@@ -2115,6 +2115,140 @@ html body {
   .lm-map .addr .v {
     overflow-wrap: anywhere;
   }
+
+  .lm-work-detail-head {
+    max-width: 900px;
+  }
+
+  .lm-work-detail-head .t {
+    font-size: clamp(36px, 5vw, 46px);
+    line-height: 1.45;
+  }
+
+  .lm-work-detail-head .lead {
+    font-size: 15px;
+    line-height: 1.9;
+  }
+
+  .lm-work-gallery {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+
+  .lm-work-gallery .main {
+    aspect-ratio: 16 / 9;
+    border-radius: 26px;
+  }
+
+  .lm-work-gallery .subs {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 20px;
+  }
+
+  .lm-work-gallery .sub {
+    min-height: 0;
+    aspect-ratio: 16 / 10;
+    border-radius: 24px;
+  }
+
+  .lm-work-detail-grid {
+    grid-template-columns: 1fr;
+    gap: 36px;
+  }
+
+  .lm-work-detail-grid .aside {
+    position: static;
+    display: grid;
+    grid-template-columns: minmax(96px, .28fr) minmax(0, 1fr);
+    gap: 14px 24px;
+    padding: 24px;
+    border: 1px solid rgba(17,17,17,.16);
+    border-radius: 24px;
+    background: #fff;
+  }
+
+  .lm-work-detail-grid .aside .k {
+    margin-top: 0 !important;
+  }
+
+  .lm-work-detail-table .row {
+    grid-template-columns: 150px 1fr;
+    gap: 24px;
+  }
+
+  .lm-work-pager {
+    gap: 20px;
+  }
+
+  .lm-work-pager .t {
+    font-size: 14px;
+  }
+
+  .lm-article {
+    max-width: 760px;
+  }
+
+  .lm-article-wrap {
+    padding-bottom: 80px !important;
+  }
+
+  .lm-article-date .y,
+  .lm-article-date .md,
+  .lm-article-date .sep {
+    font-size: 44px;
+  }
+
+  .lm-article-title {
+    font-size: 30px;
+    margin-bottom: 48px;
+  }
+
+  .lm-news-pager {
+    gap: 18px;
+  }
+
+  .lm-news-pager a {
+    min-height: 108px;
+    padding: 26px;
+    border-radius: 18px;
+  }
+
+  .lm-form {
+    gap: 40px;
+  }
+
+  .lm-form-grid {
+    gap: 24px;
+  }
+
+  .lm-form .type-chip span {
+    min-height: 44px;
+    height: auto;
+    padding: 12px 20px;
+    line-height: 1.35;
+  }
+
+  .lm-thanks {
+    margin: 48px auto;
+  }
+
+  .lm-policy-toc {
+    gap: 18px 28px;
+    padding: 18px 0 42px;
+    margin-bottom: 48px;
+  }
+
+  .lm-policy {
+    grid-template-columns: 1fr;
+    gap: 24px;
+    padding: 44px 0;
+  }
+
+  .lm-policy header h2 {
+    max-width: 760px;
+    font-size: 28px;
+  }
 }
 
 @media (max-width: 767px) {
@@ -2133,6 +2267,26 @@ html body {
 
   .lm-page-hero .lead {
     font-size: 13px;
+  }
+
+  .lm-breadcrumb {
+    gap: 7px;
+    overflow: hidden;
+    font-size: 12px;
+    line-height: 1.5;
+    white-space: nowrap;
+  }
+
+  .lm-breadcrumb a,
+  .lm-breadcrumb .sep {
+    flex: 0 0 auto;
+  }
+
+  .lm-breadcrumb .cur {
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
   }
 
   .lm-works-filter {
@@ -2344,6 +2498,342 @@ html body {
 
   .lm-map .map-area {
     width: 100%;
+  }
+
+  .lm-work-detail-head .meta {
+    gap: 10px;
+    margin-bottom: 18px;
+  }
+
+  .lm-work-detail-head .cat {
+    font-size: 10px;
+    letter-spacing: .16em;
+    padding: 6px 12px;
+  }
+
+  .lm-work-detail-head .date {
+    font-size: 12px;
+  }
+
+  .lm-work-detail-head .t {
+    font-size: 27px;
+    line-height: 1.55;
+  }
+
+  .lm-work-detail-head .lead {
+    margin-top: 18px;
+    font-size: 14px;
+    line-height: 1.9;
+  }
+
+  .lm-work-detail-head .client {
+    margin-top: 24px;
+    font-size: 11px;
+    line-height: 1.5;
+  }
+
+  .lm-work-gallery {
+    gap: 12px;
+  }
+
+  .lm-work-gallery .main {
+    border-radius: 24px;
+  }
+
+  .lm-work-gallery .subs {
+    gap: 12px;
+  }
+
+  .lm-work-gallery .sub {
+    border-radius: 18px;
+  }
+
+  .lm-work-detail-grid {
+    gap: 28px;
+  }
+
+  .lm-work-detail-grid .aside {
+    grid-template-columns: minmax(82px, .36fr) minmax(0, 1fr);
+    gap: 12px 16px;
+    padding: 20px;
+    border-radius: 20px;
+  }
+
+  .lm-work-detail-grid .aside .k {
+    font-size: 10px;
+    letter-spacing: .18em;
+  }
+
+  .lm-work-detail-grid .aside .v {
+    margin-top: 0;
+    font-size: 13px;
+    line-height: 1.55;
+    overflow-wrap: anywhere;
+  }
+
+  .lm-work-detail-table .row {
+    grid-template-columns: 1fr;
+    gap: 10px;
+    padding: 22px 0;
+  }
+
+  .lm-work-detail-table dt {
+    font-size: 12px;
+  }
+
+  .lm-work-detail-table dd {
+    font-size: 14px;
+    line-height: 1.9;
+  }
+
+  .lm-work-pager {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 14px;
+    padding: 24px 0;
+  }
+
+  .lm-work-pager .index {
+    order: -1;
+    width: 100%;
+    padding: 14px 22px;
+    text-align: center;
+  }
+
+  .lm-work-pager .prev,
+  .lm-work-pager .next {
+    flex: 1 1 calc(50% - 7px);
+    min-width: 0;
+  }
+
+  .lm-work-pager .k {
+    font-size: 10px;
+    letter-spacing: .18em;
+  }
+
+  .lm-work-pager .t {
+    font-size: 13px;
+    line-height: 1.55;
+  }
+
+  .lm-article-wrap {
+    padding-bottom: 64px !important;
+  }
+
+  .lm-article-date {
+    gap: 7px;
+    margin: 0 0 20px;
+  }
+
+  .lm-article-date .y,
+  .lm-article-date .md,
+  .lm-article-date .sep {
+    font-size: 34px;
+  }
+
+  .lm-article-date .sep.small {
+    padding: 0 3px;
+  }
+
+  .lm-article-cat {
+    margin-bottom: 22px;
+    padding: 7px 14px;
+    font-size: 10px;
+  }
+
+  .lm-article-title {
+    font-size: 23px;
+    line-height: 1.62;
+    margin-bottom: 34px;
+    padding-bottom: 28px;
+  }
+
+  .lm-article-body p {
+    font-size: 14px;
+    line-height: 1.9;
+    margin-bottom: 24px;
+  }
+
+  .lm-article-foot {
+    margin-top: 44px;
+  }
+
+  .lm-article-foot .lm-pill-outline {
+    width: 100%;
+  }
+
+  .lm-news-pager {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+
+  .lm-news-pager .next {
+    text-align: left;
+  }
+
+  .lm-news-pager a {
+    min-height: 0;
+    padding: 22px;
+    border-radius: 16px;
+  }
+
+  .lm-news-pager .t {
+    font-size: 14px;
+    line-height: 1.6;
+  }
+
+  .lm-news-pager-index {
+    margin-top: 24px;
+  }
+
+  .lm-news-pager-index .index {
+    width: 100%;
+    padding: 15px 24px;
+    text-align: center;
+  }
+
+  .lm-form {
+    gap: 32px;
+  }
+
+  .lm-form-grid {
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
+
+  .lm-form-block {
+    gap: 12px;
+  }
+
+  .lm-form-block .lab {
+    flex-wrap: wrap;
+    gap: 8px 10px;
+    font-size: 13px;
+    line-height: 1.45;
+  }
+
+  .lm-form-block .hint {
+    flex-basis: 100%;
+    line-height: 1.5;
+  }
+
+  .lm-form input[type="text"],
+  .lm-form input[type="email"],
+  .lm-form input[type="tel"],
+  .lm-form textarea {
+    width: 100%;
+    padding: 16px 18px;
+    border-radius: 14px;
+    font-size: 14px;
+  }
+
+  .lm-form textarea {
+    min-height: 180px;
+  }
+
+  .lm-form .types {
+    gap: 10px 8px;
+  }
+
+  .lm-form .type-chip span {
+    min-height: 40px;
+    padding: 10px 15px;
+    font-size: 13px;
+    letter-spacing: .04em;
+  }
+
+  .lm-form .file-box {
+    padding: 20px;
+    border-radius: 14px;
+  }
+
+  .lm-form .file-box .cta {
+    height: 42px;
+    padding: 0 20px;
+    font-size: 11px;
+  }
+
+  .lm-form-agree .agree {
+    align-items: flex-start;
+    font-size: 13px;
+    line-height: 1.7;
+  }
+
+  .lm-form-submit {
+    gap: 14px;
+  }
+
+  .lm-form-submit .lm-contact-btn {
+    width: 100%;
+    max-width: 360px;
+    min-width: 0 !important;
+  }
+
+  .lm-form-submit .reply {
+    font-size: 12px;
+    line-height: 1.75;
+    text-align: center;
+  }
+
+  .lm-thanks {
+    margin: 36px auto;
+    gap: 20px;
+  }
+
+  .lm-thanks h1 {
+    font-size: 27px;
+    line-height: 1.55;
+  }
+
+  .lm-thanks p {
+    font-size: 14px;
+    line-height: 1.9;
+  }
+
+  .lm-thanks .ctas {
+    width: 100%;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .lm-thanks .lm-contact-btn {
+    width: 100%;
+  }
+
+  .lm-policy-toc {
+    display: grid;
+    gap: 14px;
+    padding: 8px 0 32px;
+    margin-bottom: 36px;
+  }
+
+  .lm-policy-toc a {
+    font-size: 11px;
+    line-height: 1.6;
+    letter-spacing: .14em;
+  }
+
+  .lm-policy {
+    gap: 18px;
+    padding: 34px 0;
+    scroll-margin-top: 80px;
+  }
+
+  .lm-policy header h2 {
+    font-size: 22px;
+    line-height: 1.55;
+    letter-spacing: .04em;
+    margin-top: 12px;
+  }
+
+  .lm-policy .body p,
+  .lm-policy .body ol li {
+    font-size: 14px;
+    line-height: 1.9;
+  }
+
+  .lm-policy .body ol {
+    padding-left: 1.25em;
   }
 }
 
