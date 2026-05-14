@@ -61,14 +61,16 @@ function NewsDetailPage() {
       <article className="lm-section lm-article-wrap" style={{paddingTop: 0, paddingBottom: 96}} data-screen-label="News Article">
         <div className="lm-article">
           {/* エディトリアル日付 */}
-          <div className="lm-article-date">
-            <span className="y">{y}</span>
-            <span className="sep">/</span>
-            <span className="md">{m}<span className="sep small">/</span>{d}</span>
-          </div>
+          <div className="lm-article-meta">
+            <div className="lm-article-date">
+              <span className="full">{cur.date}</span>
+              <span className="y">{y}</span>
+              <span className="sep">/</span>
+              <span className="md">{m}<span className="sep small">/</span>{d}</span>
+            </div>
 
-          {/* カテゴリチップ単独行 */}
-          <div className={`lm-article-cat lm-cat--${cur.category.toLowerCase()}`}>{cur.category}</div>
+            <div className={`lm-article-cat lm-cat--${cur.category.toLowerCase()}`}>{cur.category}</div>
+          </div>
 
           {/* タイトル */}
           <h1 className="lm-article-title">{cur.title}</h1>
@@ -80,8 +82,9 @@ function NewsDetailPage() {
 
           {/* 一覧へ戻る */}
           <div className="lm-article-foot">
-            <a href="news.html" className="lm-pill-outline" style={{textDecoration:'none'}}>
-              <span>お知らせ一覧へ戻る</span><span className="circle">→</span>
+            <a href="news.html" className="lm-pill-outline lm-pill-outline--section-action lm-pill-outline--back-action" style={{textDecoration:'none'}}>
+              <span className="circle">←</span>
+              <span className="label">お知らせ一覧へ戻る</span>
             </a>
           </div>
         </div>
@@ -120,7 +123,10 @@ function NewsDetailPage() {
           </a>
         </div>
         <div className="lm-news-pager-index">
-          <a href="news.html" className="index">お知らせ一覧へ</a>
+          <a href="news.html" className="index lm-pill-outline lm-pill-outline--section-action lm-pill-outline--back-action">
+            <span className="circle">←</span>
+            <span className="label">お知らせ一覧へ</span>
+          </a>
         </div>
       </section>
 

@@ -82,9 +82,9 @@ function ContactPage() {
           </div>
 
           <div className="lm-form-submit">
-            <button type="submit" className="lm-contact-btn lm-contact-btn--primary" style={{background:'#111', color:'#F4F4F4', border:'0', minWidth:320}}>
+            <button type="submit" className="lm-contact-btn lm-form-submit-button">
               <span>送信する</span>
-              <span className="arrow" style={{background:'rgba(244,244,244,.18)', color:'#F4F4F4'}}>→</span>
+              <span className="arrow">→</span>
             </button>
             <p className="reply">内容を確認のうえ、担当者より1〜2営業日以内にご連絡いたします。</p>
           </div>
