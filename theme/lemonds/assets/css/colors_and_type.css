@@ -1,0 +1,204 @@
+/* ──────────────────────────────────────────────────────────────────
+   LEMONDS Entertainment — Foundation tokens
+   Source of truth: design system Figma ("ルモンズ.fig") + brand brief
+   ────────────────────────────────────────────────────────────────── */
+
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&display=swap');
+
+:root {
+  /* ── Brand colors ────────────────────────────────────────────── */
+  --brand-deep-green: #111111;     /* primary text + brand accent (74× usage) */
+  --brand-ink:        #111111;     /* CTA / dark capsule */
+  --brand-cream-bg:   #F4F4F4;     /* page background */
+  --brand-white:      #FFFFFF;     /* cards, surfaces */
+
+  /* ── Neutral scale ───────────────────────────────────────────── */
+  --neutral-100: #FFFFFF;
+  --neutral-200: #F4F4F4;   /* page bg */
+  --neutral-300: #E2E2E2;   /* hairlines */
+  --neutral-400: #E0E0E0;   /* button outline */
+  --neutral-500: #DCDCDC;   /* photo wash overlay */
+  --neutral-600: #D9D9D9;   /* secondary capsule fill */
+  --neutral-700: #C4C4C4;   /* placeholder fill */
+  --neutral-800: #9F9F9F;   /* "VIEW MORE" pill bg, muted icons */
+  --neutral-900: #000000;
+
+  /* ── Semantic foreground ─────────────────────────────────────── */
+  --fg-primary:   #111111;  /* default body / headings */
+  --fg-secondary: #111111CC;/* 80% on dark green */
+  --fg-muted:     rgba(0,0,0,0.5);
+  --fg-on-dark:   #FFFFFF;
+  --fg-on-image:  #FFFFFF;
+
+  /* ── Semantic background ─────────────────────────────────────── */
+  --bg-page:       #F4F4F4;
+  --bg-surface:    #FFFFFF;
+  --bg-cta:        #111111;
+  --bg-secondary:  #D9D9D9;
+  --bg-pill-muted: #9F9F9F;
+
+  /* ── Typography stack ────────────────────────────────────────── */
+  --font-jp:    'Noto Sans JP', 'Hiragino Kaku Gothic ProN', 'Yu Gothic', system-ui, sans-serif;
+  --font-en:    'Noto Sans JP', 'Helvetica Neue', Arial, sans-serif;
+  --font-mono:  'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
+
+  /* ── Type weights ────────────────────────────────────────────── */
+  --fw-regular: 400;
+  --fw-medium:  500;
+  --fw-bold:    700;
+
+  /* ── Type scale (px @ 1920 design width) ─────────────────────── */
+  --fs-display:   56px;   /* hero headline JP, e.g. 想いを、価値あるカタチに。*/
+  --fs-h1:        48px;
+  --fs-h2:        32px;   /* SECTION eyebrow EN (PICK UP, SERVICE, WORKS) */
+  --fs-h3:        24px;   /* card titles, button label CTA */
+  --fs-h4:        22px;   /* mid-weight item title */
+  --fs-h5:        20px;
+  --fs-body-lg:   18px;   /* nav, section subhead JP */
+  --fs-body:      16px;   /* default body, button label */
+  --fs-body-sm:   14px;   /* meta, dates, secondary copy */
+
+  /* ── Letter-spacing ──────────────────────────────────────────── */
+  --tracking-tight:  0.020em;
+  --tracking-normal: 0.040em;   /* default body JP */
+  --tracking-wide:   0.060em;
+  --tracking-wider:  0.080em;
+  --tracking-widest: 0.120em;   /* dates, → arrows, button caps */
+  --tracking-display:0.160em;   /* "詳細を見る" button caps */
+
+  /* ── Line-height ─────────────────────────────────────────────── */
+  --lh-tight:    1.0;
+  --lh-snug:     1.4;
+  --lh-normal:   1.6;
+  --lh-relaxed:  1.84;          /* JP long-form body */
+  --lh-loose:    2.2;
+
+  /* ── Radii ───────────────────────────────────────────────────── */
+  --radius-sm:   16px;
+  --radius-md:   24px;
+  --radius-lg:   28px;          /* small image / feature cards */
+  --radius-xl:   40px;          /* large hero / news cards, pill capsules */
+  --radius-2xl:  48px;          /* feature card surrounds */
+  --radius-full: 9999px;
+
+  /* Inner asymmetric radius — signature shape on news card label panel */
+  --radius-news-label: 20px 40px 20px 40px;
+
+  /* ── Spacing (8-pt grid, derived from frame paddings 80/100/120) */
+  --space-1:  4px;
+  --space-2:  8px;
+  --space-3:  12px;
+  --space-4:  16px;
+  --space-5:  24px;
+  --space-6:  32px;
+  --space-7:  48px;
+  --space-8:  64px;
+  --space-9:  80px;
+  --space-10: 100px;
+  --space-11: 120px;
+
+  /* ── Shadow / elevation (used sparingly; design favours flat) ── */
+  --shadow-card:    0 8px 24px rgba(17,17,17, 0.06);
+  --shadow-pop:     0 16px 40px rgba(17,17,17, 0.10);
+  --shadow-photo:   0 12px 28px rgba(0, 0, 0, 0.08);
+
+  /* ── Photo-overlay protection gradient (white wash bottom) ──── */
+  --gradient-photo-wash: linear-gradient(
+    180deg,
+    rgba(244,244,244,0) 41%,
+    rgba(244,244,244,0.79) 58%,
+    rgba(244,244,244,1) 77%
+  );
+
+  /* ── Dim circle on imagery (→ button on photo) ──────────────── */
+  --overlay-arrow-dim: rgba(0, 0, 0, 0.35);
+
+  /* ── Motion ──────────────────────────────────────────────────── */
+  --ease-out:    cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+  --dur-fast:    160ms;
+  --dur-base:    260ms;
+  --dur-slow:    480ms;
+
+  /* ── Focus ring ──────────────────────────────────────────────── */
+  --focus-ring: 0 0 0 3px rgba(17,17,17, 0.35);
+}
+
+/* ──────────────────────────────────────────────────────────────────
+   Element defaults
+   ────────────────────────────────────────────────────────────────── */
+html, body {
+  background: var(--bg-page);
+  color: var(--fg-primary);
+  font-family: var(--font-jp);
+  font-weight: var(--fw-regular);
+  font-size: var(--fs-body);
+  line-height: var(--lh-relaxed);
+  letter-spacing: var(--tracking-normal);
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+}
+
+h1, .h1 {
+  font-family: var(--font-jp);
+  font-weight: var(--fw-bold);
+  font-size: var(--fs-display);
+  line-height: var(--lh-snug);
+  letter-spacing: var(--tracking-wide);
+  color: var(--fg-primary);
+  margin: 0;
+}
+
+h2, .h2 {
+  font-family: var(--font-en);
+  font-weight: var(--fw-bold);
+  font-size: var(--fs-h2);
+  line-height: var(--lh-loose);
+  letter-spacing: var(--tracking-tight);
+  color: var(--brand-ink);
+  margin: 0;
+}
+
+h3, .h3 {
+  font-family: var(--font-jp);
+  font-weight: var(--fw-bold);
+  font-size: var(--fs-h3);
+  line-height: var(--lh-tight);
+  letter-spacing: var(--tracking-display);
+  color: var(--fg-primary);
+  margin: 0;
+}
+
+h4, .h4 {
+  font-family: var(--font-jp);
+  font-weight: var(--fw-medium);
+  font-size: var(--fs-h4);
+  line-height: var(--lh-tight);
+  letter-spacing: var(--tracking-normal);
+  color: var(--fg-primary);
+  margin: 0;
+}
+
+p, .p {
+  font-size: var(--fs-body);
+  line-height: var(--lh-relaxed);
+  letter-spacing: var(--tracking-normal);
+  color: var(--fg-primary);
+  margin: 0;
+}
+
+small, .meta {
+  font-size: var(--fs-body-sm);
+  line-height: var(--lh-normal);
+  letter-spacing: var(--tracking-widest);
+  color: var(--fg-muted);
+}
+
+.eyebrow {
+  font-family: var(--font-en);
+  font-weight: var(--fw-medium);
+  font-size: var(--fs-body-sm);
+  letter-spacing: var(--tracking-widest);
+  color: var(--fg-primary);
+  text-transform: uppercase;
+}

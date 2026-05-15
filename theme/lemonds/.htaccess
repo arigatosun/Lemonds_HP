@@ -1,0 +1,45 @@
+# BEGIN WordPress
+# 「BEGIN WordPress」と「END WordPress」の間のディレクティブ (行) は動的に生成され、
+# WordPress フィルターによってのみ変更されるべきです。
+# これらのマーカーの間にあるディレクティブへの変更はすべて上書きされます。
+<IfModule mod_rewrite.c>
+RewriteEngine On
+RewriteRule .* - [E=HTTP_AUTHORIZATION:%{HTTP:Authorization}]
+RewriteBase /
+RewriteRule ^index\.php$ - [L]
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule . /index.php [L]
+</IfModule>
+# END WordPress
+
+# ─────────────────────────────────────────────────────────────
+# LEMONDS: 旧 .html URL → 新 permalink への 301 リダイレクト
+# 参照: .claude/plans/schema-registry.md §6
+# ─────────────────────────────────────────────────────────────
+<IfModule mod_rewrite.c>
+RewriteEngine On
+
+# トップページ
+RewriteRule ^index\.html$ / [R=301,L]
+
+# 主要固定ページ
+RewriteRule ^services\.html$ /services/ [R=301,L]
+RewriteRule ^works\.html$ /works/ [R=301,L]
+RewriteRule ^news\.html$ /news/ [R=301,L]
+RewriteRule ^company\.html$ /company/ [R=301,L]
+RewriteRule ^contact\.html$ /contact/ [R=301,L]
+RewriteRule ^contact-thanks\.html$ /contact/thanks/ [R=301,L]
+RewriteRule ^policy\.html$ /policy/ [R=301,L]
+
+# クエリ付き URL（contact.html?type=quote）
+# /contact/?type=quote へ。クエリ部分はそのまま QSA で引き継ぐ
+RewriteCond %{QUERY_STRING} (^|&)type=quote(&|$)
+RewriteRule ^contact\.html$ /contact/ [R=301,L,QSA]
+
+# 詳細ページのクエリ受け（works-detail.html?slug=xxx / news-detail.html?slug=xxx）
+# は PHP 側（single-works.php / single-news.php の冒頭）で
+# $_GET['slug'] を見て wp_redirect() するロジックで処理する。
+# ここでは静的部分のみハンドリング。
+# ─────────────────────────────────────────────────────────────
+</IfModule>
