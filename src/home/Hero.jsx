@@ -8,43 +8,11 @@ function Hero() {
   ];
   const cur = items[idx];
 
-  const TOP = [
-    { src:'photo-business-meeting.jpg', flex: 1.0, pos: '50% 40%' },
-    { src:'photo-concert-lights.jpg', flex: 1.4, pos: '50% 50%' },
-    { src:'photo-friends-selfie.jpg', flex: 1.0, pos: '50% 35%' },
-  ];
-  const BOTTOM = [
-    { src:'photo-cosmetics-mono.jpg', flex: 1.0, pos: '50% 50%' },
-    { src:'photo-cosmetics-pink.jpg', flex: 1.0, pos: '50% 50%' },
-    { src:'photo-merch-flatlay.jpg', flex: 1.0, pos: '50% 50%' },
-    { src:'photo-business-meeting.jpg', flex: 1.0, pos: '60% 50%' },
-    { src:'photo-friends-selfie.jpg', flex: 1.0, pos: '50% 50%' },
-  ];
-
   return (
     <section className="lm-hero">
       <div className="lm-hero__stage">
         <div className="lm-hero__media">
-          <div className="lm-hero__media-grid">
-            <div className="lm-hero__media-row lm-hero__media-row--top">
-              {TOP.map((t,i) => (
-                <div
-                  key={i}
-                  className="lm-hero__tile"
-                  style={{flex: t.flex, backgroundImage:`url(assets/${t.src})`, backgroundPosition:t.pos}}
-                />
-              ))}
-            </div>
-            <div className="lm-hero__media-row lm-hero__media-row--bottom">
-              {BOTTOM.map((t,i) => (
-                <div
-                  key={i}
-                  className="lm-hero__tile"
-                  style={{flex: t.flex, backgroundImage:`url(assets/${t.src})`, backgroundPosition:t.pos}}
-                />
-              ))}
-            </div>
-          </div>
+          <div className="lm-hero__media-image" aria-hidden="true"/>
           <div className="lm-hero__wash" aria-hidden="true"/>
         </div>
 

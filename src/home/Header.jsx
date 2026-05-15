@@ -11,7 +11,7 @@ function Header() {
   return (
     <header className={`lm-header${open ? ' is-open' : ''}`}>
       <a href="index.html" className="lm-header__logo">
-        <img src="assets/lemonds-logo-wordmark.svg" alt="LEMONDS"/>
+        <img src="assets/lemonds-logo-brand.png" alt="LEMONDS ENTERTAINMENT Co.,Ltd"/>
       </a>
 
       <nav className="lm-header__nav" aria-label="Primary navigation">

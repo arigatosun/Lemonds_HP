@@ -38,9 +38,9 @@ function Company() {
           </button>
         </div>
         <dl className="facts">
-          <div><dt>所在地</dt><dd>東京都新宿区</dd></div>
-          <div><dt>設立</dt><dd>20XX年</dd></div>
-          <div><dt>事業</dt><dd>OEM / MD / 物流 / DX</dd></div>
+          <div><dt>所在地</dt><dd>東京都新宿区新宿6丁目24番20号</dd></div>
+          <div><dt>設立</dt><dd>2017年11月7日</dd></div>
+          <div><dt>事業</dt><dd>商品企画 / 仕様プランニング / 制作進行 / 販売管理</dd></div>
         </dl>
       </div>
     </section>

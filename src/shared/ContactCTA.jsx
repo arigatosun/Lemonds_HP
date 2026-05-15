@@ -37,11 +37,11 @@ function ContactCTA() {
           <div className="lm-contact-cta__info">
             <div>
               <div className="lm-contact-cta__info-label">EMAIL</div>
-              <div className="lm-contact-cta__info-value">contact@lemonds.example</div>
+              <div className="lm-contact-cta__info-value">info@lemonds.page</div>
             </div>
             <div>
               <div className="lm-contact-cta__info-label">TEL</div>
-              <div className="lm-contact-cta__info-value">03-0000-0000</div>
+              <div className="lm-contact-cta__info-value">03-5969-9075</div>
             </div>
           </div>
         </div>

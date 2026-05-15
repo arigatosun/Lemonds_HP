@@ -36,11 +36,11 @@ function Footer() {
         <div>
           <div className="lm-footer__title">— ADDRESS</div>
           <p className="lm-footer__text">
-            〒000-0000<br/>東京都新宿区◯◯町 0-0-0<br/>ルモンズビル 3F
+            東京都新宿区新宿6丁目24番20号
           </p>
           <div className="lm-footer__title lm-footer__title--spaced">— CONTACT</div>
           <p className="lm-footer__text">
-            TEL  03-0000-0000<br/>MAIL  contact@lemonds.example
+            TEL  03-5969-9075<br/>MAIL  info@lemonds.page
           </p>
         </div>
         {groups.map(col => (

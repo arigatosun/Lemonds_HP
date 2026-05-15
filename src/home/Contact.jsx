@@ -53,11 +53,11 @@ function Contact() {
           <div className="lm-home-contact__info">
             <div>
               <div className="lm-home-contact__info-label">EMAIL</div>
-              <div className="lm-home-contact__info-value">contact@lemonds.example</div>
+              <div className="lm-home-contact__info-value">info@lemonds.page</div>
             </div>
             <div>
               <div className="lm-home-contact__info-label">TEL</div>
-              <div className="lm-home-contact__info-value">03-0000-0000</div>
+              <div className="lm-home-contact__info-value">03-5969-9075</div>
             </div>
           </div>
         </div>
