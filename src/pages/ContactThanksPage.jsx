@@ -19,11 +19,13 @@ function ContactThanksPage() {
             お急ぎの場合は、お電話（03-5969-9075）よりお問い合わせください。
           </p>
           <div className="ctas">
-            <a href="index.html" className="lm-pill-outline" style={{textDecoration:'none'}}>
-              <span>トップへ戻る</span><span className="circle">→</span>
+            <a href="index.html" className="lm-pill-outline lm-pill-outline--section-action lm-pill-outline--back-action lm-thanks-button lm-thanks-button--home" style={{textDecoration:'none'}}>
+              <span className="circle">←</span>
+              <span className="label">トップへ戻る</span>
             </a>
-            <a href="services.html" className="lm-pill-outline" style={{textDecoration:'none'}}>
-              <span>事業内容を見る</span><span className="circle">→</span>
+            <a href="services.html" className="lm-pill-outline lm-pill-outline--section-action lm-thanks-button lm-thanks-button--services" style={{textDecoration:'none'}}>
+              <span className="label">事業内容を見る</span>
+              <span className="circle">→</span>
             </a>
           </div>
         </div>

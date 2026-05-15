@@ -1,33 +1,51 @@
-// SubHeader.jsx — 下層ページ用ヘッダー（トップと同等／ナビ最終形）
+// SubHeader.jsx - lower page header
 function SubHeader() {
+  const [open, setOpen] = React.useState(false);
   const links = [
     { l: '事業内容', href: 'services.html' },
     { l: '制作実績', href: 'works.html' },
     { l: 'お知らせ', href: 'news.html' },
     { l: '会社概要', href: 'company.html' },
   ];
+
   return (
-    <header style={{
-      position: 'sticky', top: 0, zIndex: 50,
-      display: 'flex', alignItems: 'center', justifyContent: 'space-between',
-      padding: '32px var(--lm-content-x) 24px', background: 'rgba(244,244,244,0.94)',
-      backdropFilter: 'saturate(140%) blur(8px)',
-      WebkitBackdropFilter: 'saturate(140%) blur(8px)',
-    }}>
-      <a href="index.html" style={{display:'inline-flex'}}>
-        <img src="assets/lemonds-logo-wordmark.svg" alt="LEMONDS" style={{height: 36}}/>
+    <header className={`lm-header${open ? ' is-open' : ''}`}>
+      <a href="index.html" className="lm-header__logo">
+        <img src="assets/lemonds-logo-brand.png" alt="LEMONDS ENTERTAINMENT Co.,Ltd"/>
       </a>
-      <nav style={{display:'flex', gap: 60}}>
+
+      <nav className="lm-header__nav" aria-label="Primary navigation">
         {links.map(({l, href}) => (
-          <a key={l} href={href} style={{
-            font:'500 16px/1 var(--font-jp)', color:'#111111',
-            letterSpacing:'0.04em', textDecoration:'none',
-          }}>{l}</a>
+          <a key={l} href={href}>{l}</a>
         ))}
       </nav>
-      <div style={{display:'flex', gap: 16}}>
-        <a href="contact.html?type=quote" className="lm-btn lm-btn-secondary" style={{width:180,height:48,textDecoration:'none'}}>見積もり依頼</a>
-        <a href="contact.html" className="lm-btn lm-btn-primary" style={{width:180,height:48,textDecoration:'none'}}>お問い合わせ</a>
+
+      <div className="lm-header__actions">
+        <a href="contact.html?type=quote" className="lm-btn lm-btn-secondary lm-header__button">見積もり依頼</a>
+        <a href="contact.html" className="lm-btn lm-btn-primary lm-header__button">お問い合わせ</a>
+      </div>
+
+      <button
+        type="button"
+        className="lm-header__menu"
+        aria-label="Menu"
+        aria-expanded={open}
+        onClick={() => setOpen(!open)}
+      >
+        <span/>
+        <span/>
+      </button>
+
+      <div className="lm-header__drawer">
+        <nav className="lm-header__drawer-nav" aria-label="Mobile navigation">
+          {links.map(({l, href}) => (
+            <a key={l} href={href} onClick={() => setOpen(false)}>{l}</a>
+          ))}
+        </nav>
+        <div className="lm-header__drawer-actions">
+          <a href="contact.html?type=quote" className="lm-btn lm-btn-secondary lm-header__button" onClick={() => setOpen(false)}>見積もり依頼</a>
+          <a href="contact.html" className="lm-btn lm-btn-primary lm-header__button" onClick={() => setOpen(false)}>お問い合わせ</a>
+        </div>
       </div>
     </header>
   );

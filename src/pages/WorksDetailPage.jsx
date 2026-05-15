@@ -135,7 +135,10 @@ function WorksDetailPage() {
             <span className="k">← PREV</span>
             <span className="t">{prev.title}</span>
           </a>
-          <a href="works.html" className="index">一覧へ戻る</a>
+          <a href="works.html" className="index lm-pill-outline lm-pill-outline--section-action lm-pill-outline--back-action">
+            <span className="circle">←</span>
+            <span className="label">一覧へ戻る</span>
+          </a>
           <a href={`works-detail.html?slug=${next.slug}`} className="next">
             <span className="k">NEXT →</span>
             <span className="t">{next.title}</span>

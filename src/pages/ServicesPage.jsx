@@ -175,7 +175,7 @@ function ServicesPage() {
                   </ul>
                 </div>
                 {!s.status && (
-                  <a href="contact.html" className="lm-pill-outline lm-svc-consult-btn" style={{marginTop: 8, textDecoration:'none'}}>
+                  <a href="contact.html" className="lm-pill-outline lm-pill-outline--section-action lm-pill-outline--service-consult">
                     <span>この事業について相談する</span><span className="circle">→</span>
                   </a>
                 )}

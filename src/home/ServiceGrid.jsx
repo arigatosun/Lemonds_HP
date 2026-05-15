@@ -23,34 +23,24 @@ function ServiceGrid() {
       copy:'オリジナルグッズやMD販売に適した。HP・ECサイト制作サービスを準備しています。商品設計から販売導線までを一貫して考えた販売基盤の構築を支援予定です。' },
   ];
   return (
-    <section style={{position:'relative', width: 1920, margin:'0 auto', padding:'0 0 80px'}}>
-      <div style={{
-        width:'var(--lm-content-width)', margin:'0 auto',
-        display:'grid', gridTemplateColumns:'420px 1fr', gap: 60,
-        paddingTop: 120, alignItems:'start',
-      }}>
+    <section className="lm-home-service">
+      <div className="lm-home-service__inner">
       {/* Left: SERVICE intro */}
-      <div style={{
-        background:'#fff', borderRadius: 48,
-        padding:'60px 48px',
-      }}>
-        <h2 style={{font:'700 48px/1 var(--font-en)', letterSpacing:'0.02em', margin:0, color:'#111', textDecoration:'underline', textDecorationThickness:3, textUnderlineOffset:12}}>SERVICE</h2>
-        <div style={{font:'700 18px/1 var(--font-jp)', letterSpacing:'0.06em', color:'#111111', marginTop: 16}}>事業内容</div>
-        <p style={{font:'400 14px/1.8 var(--font-jp)', color:'#111111', letterSpacing:'0.04em', marginTop: 28, maxWidth: 360}}>
+      <div className="lm-home-service__intro">
+        <h2 className="lm-home-service__title">SERVICE</h2>
+        <div className="lm-home-service__ja">事業内容</div>
+        <p className="lm-home-service__copy">
           アパレル、ノベルティ、健康機器、EC施策まで。幅広く対応する総合グッズカンパニーとして、お客様のニーズにお応えします。
         </p>
-        <div style={{marginTop: 80}}>
-          <button className="lm-pill-outline" style={{width:315, height:76, paddingLeft: 56}}>
+        <div className="lm-home-service__action">
+          <button className="lm-pill-outline lm-pill-outline--section-action">
             <span>詳細を見る</span><span className="circle">→</span>
           </button>
         </div>
       </div>
 
       {/* Right: 3-column grid */}
-      <div style={{
-        display:'grid', gridTemplateColumns:'repeat(3, 1fr)', columnGap: 32, rowGap: 56,
-        alignItems:'start',
-      }}>
+      <div className="lm-home-service__grid">
         {services.map(s => (
           <div key={s.title} className="lm-svc-card-b">
             <div className="thumb" style={{backgroundImage:`url(assets/${s.img})`}}/>

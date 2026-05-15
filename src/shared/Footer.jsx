@@ -20,41 +20,36 @@ function Footer() {
     ]},
   ];
   return (
-    <footer style={{
-      background:'#F4F4F4', color:'#111', padding:'80px var(--lm-content-x) 40px',
-      borderTop:'1px solid rgba(17,17,17,.18)',
-    }}>
+    <footer className="lm-footer">
       {/* compact wordmark + tagline */}
-      <div style={{display:'grid', gridTemplateColumns:'auto 1fr', alignItems:'end', gap: 40, paddingBottom: 28, borderBottom:'1px solid rgba(17,17,17,.18)'}}>
-        <div aria-hidden="true" style={{
-          font:'700 56px/.95 var(--font-en)', letterSpacing:'-.01em', color:'#111',
-        }}>
-          LEMONDS<span style={{color:'rgba(17,17,17,.18)'}}>.</span>
+      <div className="lm-footer__top">
+        <div aria-hidden="true" className="lm-footer__brand">
+          LEMONDS<span className="lm-footer__brand-dot">.</span>
         </div>
-        <div style={{font:'600 11px/1 var(--font-en)', letterSpacing:'.24em', color:'rgba(17,17,17,.55)', textAlign:'right'}}>
+        <div className="lm-footer__tagline">
           ENTERTAINMENT Co.,Ltd · TURNING IDEAS INTO MEANINGFUL VALUE
         </div>
       </div>
 
       {/* sitemap */}
-      <div style={{display:'grid', gridTemplateColumns:'1.2fr repeat(3, 1fr)', gap: 56, paddingTop: 56}}>
+      <div className="lm-footer__grid">
         <div>
-          <div style={{font:'700 13px/1 var(--font-en)', letterSpacing:'.22em', color:'rgba(17,17,17,.55)'}}>— ADDRESS</div>
-          <p style={{font:'500 14px/1.84 var(--font-jp)', letterSpacing:'.04em', margin:'18px 0 0'}}>
-            〒000-0000<br/>東京都新宿区◯◯町 0-0-0<br/>ルモンズビル 3F
+          <div className="lm-footer__title">— ADDRESS</div>
+          <p className="lm-footer__text">
+            東京都新宿区新宿6丁目24番20号
           </p>
-          <div style={{font:'700 13px/1 var(--font-en)', letterSpacing:'.22em', color:'rgba(17,17,17,.55)', marginTop: 32}}>— CONTACT</div>
-          <p style={{font:'500 14px/1.84 var(--font-jp)', letterSpacing:'.04em', margin:'18px 0 0'}}>
-            TEL  03-0000-0000<br/>MAIL  contact@lemonds.example
+          <div className="lm-footer__title lm-footer__title--spaced">— CONTACT</div>
+          <p className="lm-footer__text">
+            TEL  03-5969-9075<br/>MAIL  info@lemonds.page
           </p>
         </div>
         {groups.map(col => (
           <div key={col.h}>
-            <div style={{font:'700 13px/1 var(--font-en)', letterSpacing:'.22em', color:'rgba(17,17,17,.55)'}}>— {col.h}</div>
-            <ul style={{margin:'18px 0 0', padding:0, listStyle:'none', display:'flex', flexDirection:'column', gap: 14}}>
+            <div className="lm-footer__title">— {col.h}</div>
+            <ul className="lm-footer__list">
               {col.items.map(i => (
-                <li key={i.l} style={{font:'500 14px/1.4 var(--font-jp)', letterSpacing:'.04em'}}>
-                  <a href={i.href} style={{color:'#111', textDecoration:'none', borderBottom:'1px solid transparent', transition:'border-color 160ms'}}>{i.l}</a>
+                <li key={i.l} className="lm-footer__item">
+                  <a href={i.href} className="lm-footer__link">{i.l}</a>
                 </li>
               ))}
             </ul>
@@ -63,16 +58,12 @@ function Footer() {
       </div>
 
       {/* bottom bar */}
-      <div style={{
-        borderTop:'1px solid rgba(17,17,17,.18)', marginTop: 56, paddingTop: 24,
-        display:'flex', justifyContent:'space-between', alignItems:'center',
-        font:'500 11px/1 var(--font-en)', letterSpacing:'.18em', color:'rgba(17,17,17,.55)',
-      }}>
+      <div className="lm-footer__bottom">
         <span>© 2026 LEMONDS ENTERTAINMENT Co.,Ltd</span>
-        <span style={{display:'flex', gap: 24}}>
-          <a href="policy.html" style={{color:'inherit', textDecoration:'none'}}>PRIVACY POLICY</a>
-          <a href="policy.html" style={{color:'inherit', textDecoration:'none'}}>TERMS</a>
-          <a href="policy.html" style={{color:'inherit', textDecoration:'none'}}>SITEMAP</a>
+        <span className="lm-footer__legal">
+          <a href="policy.html">PRIVACY POLICY</a>
+          <a href="policy.html">TERMS</a>
+          <a href="policy.html">SITEMAP</a>
         </span>
       </div>
     </footer>
