@@ -918,7 +918,7 @@ html body {
    COMPANY PAGE
    ────────────────────────────────────────────────────────────── */
 .lm-section.lm-company-about {
-  padding-top: 64px;
+  padding-top: 80px;
 }
 .lm-company-about {
   position: relative;
@@ -994,6 +994,111 @@ html body {
   top: 322px;
   z-index: 2;
   background-position: center;
+}
+
+@media (min-width: 1025px) and (max-width: 1919px) {
+  #root[data-screen-label="Company"] {
+    --lm-canvas-width: 100%;
+    --lm-content-width: min(calc(100vw - clamp(96px, 10vw, 200px)), 1600px);
+    --lm-content-x: max(48px, calc((100vw - var(--lm-content-width)) / 2));
+    --lm-about-collage-scale: .66;
+    --lm-about-collage-offset: 56px;
+  }
+
+  #root[data-screen-label="Company"] .lm-company-about {
+    min-height: clamp(780px, 56vw, 1000px);
+  }
+
+  #root[data-screen-label="Company"] .lm-section.lm-company-about {
+    padding-bottom: clamp(88px, 6.25vw, 120px);
+  }
+
+  #root[data-screen-label="Company"] .lm-company-about .lm-section-head {
+    margin-bottom: clamp(36px, 3vw, 48px);
+  }
+
+  #root[data-screen-label="Company"] .lm-about-body {
+    min-height: clamp(500px, 39vw, 600px);
+  }
+
+  #root[data-screen-label="Company"] .lm-about-body .copy {
+    width: clamp(760px, 65vw, 980px);
+  }
+
+  #root[data-screen-label="Company"] .lm-about-body .copy p {
+    font-size: clamp(14px, 1vw, 16px);
+  }
+
+  #root[data-screen-label="Company"] .lm-about-collage {
+    width: 1600px;
+    height: 680px;
+    inset: auto;
+    left: 0;
+    top: var(--lm-about-collage-offset);
+    transform: scale(var(--lm-about-collage-scale));
+    transform-origin: top left;
+  }
+
+  #root[data-screen-label="Company"] .lm-about-collage__tile {
+    border-radius: clamp(20px, 1.45vw, 28px);
+  }
+}
+
+@media (min-width: 1200px) and (max-width: 1919px) {
+  #root[data-screen-label="Company"] {
+    --lm-about-collage-scale: .74;
+    --lm-about-collage-offset: 48px;
+  }
+}
+
+@media (min-width: 1366px) and (max-width: 1919px) {
+  #root[data-screen-label="Company"] {
+    --lm-about-collage-scale: .82;
+    --lm-about-collage-offset: 24px;
+  }
+}
+
+@media (min-width: 1536px) and (max-width: 1919px) {
+  #root[data-screen-label="Company"] {
+    --lm-about-collage-scale: .91;
+    --lm-about-collage-offset: 0px;
+  }
+}
+
+@media (min-width: 1720px) and (max-width: 1919px) {
+  #root[data-screen-label="Company"] {
+    --lm-about-collage-scale: 1;
+  }
+}
+
+@media (min-width: 1025px) and (max-width: 1199px) {
+  #root[data-screen-label="Company"] .lm-header {
+    padding-top: 28px;
+    padding-bottom: 22px;
+  }
+
+  #root[data-screen-label="Company"] .lm-header__logo img {
+    height: 34px;
+  }
+
+  #root[data-screen-label="Company"] .lm-header__nav {
+    gap: 34px;
+  }
+
+  #root[data-screen-label="Company"] .lm-header__nav a {
+    font-size: 14px;
+    white-space: nowrap;
+  }
+
+  #root[data-screen-label="Company"] .lm-header__actions {
+    gap: 12px;
+  }
+
+  #root[data-screen-label="Company"] .lm-header__button {
+    width: 150px;
+    height: 44px;
+    font-size: 14px;
+  }
 }
 
 .lm-company-table { margin: 0; }
@@ -2255,55 +2360,85 @@ html body {
   }
 
   .lm-about-body {
-    min-height: auto;
+    isolation: isolate;
+    min-height: clamp(820px, 82vw, 860px);
+    padding: clamp(28px, 4vw, 44px) 0 clamp(210px, 24vw, 260px);
+    border-radius: 34px;
+    overflow: hidden;
+    background: transparent;
+  }
+
+  .lm-about-body::before {
+    content: "";
+    position: absolute;
+    inset: -24px 31% 24% -24px;
+    z-index: 1;
+    pointer-events: none;
+    background:
+      linear-gradient(105deg, rgba(244,244,244,.94) 0%, rgba(244,244,244,.86) 54%, rgba(244,244,244,.52) 76%, rgba(244,244,244,0) 100%),
+      radial-gradient(circle at 26% 32%, rgba(255,255,255,.82) 0 18%, rgba(255,255,255,0) 58%);
+    filter: blur(8px);
   }
 
   .lm-about-body .copy {
     width: 100%;
-    max-width: 880px;
+    max-width: min(680px, 63%);
+    padding: clamp(20px, 3vw, 32px) 0 0;
+    border-radius: 0;
+    background: transparent;
+    border: 0;
+    box-shadow: none;
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
   }
 
   .lm-about-collage {
-    position: relative;
-    inset: auto;
-    height: 620px;
-    margin-top: 48px;
-    overflow: hidden;
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    height: auto;
+    margin-top: 0;
+    overflow: visible;
   }
 
   .lm-about-collage__tile--edge {
-    width: 142px;
-    height: 172px;
-    left: -72px;
-    top: 108px;
+    width: clamp(132px, 18vw, 184px);
+    height: clamp(159px, 22vw, 222px);
+    left: -86px;
+    top: 36%;
   }
 
   .lm-about-collage__tile--left {
-    width: 320px;
-    height: 196px;
-    left: 40px;
-    top: 318px;
+    width: clamp(330px, 44vw, 460px);
+    height: clamp(202px, 27vw, 281px);
+    left: -76px;
+    top: auto;
+    bottom: 24px;
   }
 
   .lm-about-collage__tile--center {
-    width: 360px;
-    height: 228px;
-    left: 250px;
-    top: 206px;
+    width: clamp(360px, 46vw, 480px);
+    height: clamp(227px, 29vw, 303px);
+    left: auto;
+    right: -48px;
+    top: clamp(490px, 50vw, 520px);
   }
 
   .lm-about-collage__tile--right {
-    width: 360px;
-    height: 162px;
-    left: 380px;
-    top: 0;
+    width: clamp(350px, 47vw, 480px);
+    height: clamp(158px, 21vw, 216px);
+    left: auto;
+    right: -128px;
+    top: -12px;
   }
 
   .lm-about-collage__tile--large {
-    width: 440px;
-    height: 298px;
-    left: 460px;
-    top: 238px;
+    width: clamp(300px, 38vw, 380px);
+    height: clamp(202px, 25.5vw, 256px);
+    left: auto;
+    right: -92px;
+    top: 250px;
+    bottom: auto;
   }
 
   .lm-company-table .row {
@@ -2596,49 +2731,95 @@ html body {
   }
 
   .lm-about-collage {
-    height: 470px;
-    margin-top: 28px;
+    grid-column: 1;
+    grid-row: 1;
+    position: relative;
+    inset: auto;
+    justify-self: center;
+    width: min(100%, 640px);
+    height: auto;
+    aspect-ratio: 900 / 720;
+    margin-top: 0;
+    margin-bottom: clamp(24px, calc(3px + 5.3vw), 44px);
+    border-radius: 0;
+    overflow: visible;
+    isolation: isolate;
+    background: url(../assets/company-about-collage-mobile.png) center top / contain no-repeat;
+    transform: scale(clamp(1.08, calc(.977 + 2.65vw), 1.18));
+    transform-origin: center top;
+  }
+
+  .lm-about-collage::after {
+    display: none;
+  }
+
+  .lm-about-body {
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: auto auto;
+    min-height: 0;
+    padding: 0;
+    border-radius: 0;
+    overflow: visible;
+  }
+
+  .lm-about-body::before {
+    display: none;
+  }
+
+  .lm-about-body .copy {
+    display: block;
+    grid-column: 1;
+    grid-row: 2;
+    position: relative;
+    z-index: 2;
+    width: auto;
+    max-width: none;
+    margin-top: 0;
+    padding: 0;
+    border-radius: 0;
+    background: transparent;
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
   }
 
   .lm-about-body .copy p {
+    position: relative;
     font-size: 14px;
     line-height: 1.9;
-    margin-bottom: 20px;
+    margin: 24px 0 0;
+  }
+
+  .lm-about-body .copy p:first-child {
+    width: auto;
+    margin-top: 0;
+    padding: 0;
+    border-radius: 0;
+    background: transparent;
+    border: 0;
+    box-shadow: none;
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
   }
 
   .lm-about-collage__tile--edge {
-    width: 98px;
-    height: 118px;
-    left: -58px;
-    top: 92px;
+    display: none;
   }
 
   .lm-about-collage__tile--left {
-    width: 214px;
-    height: 130px;
-    left: 4px;
-    top: 278px;
+    display: none;
   }
 
   .lm-about-collage__tile--center {
-    width: 260px;
-    height: 164px;
-    left: 90px;
-    top: 164px;
+    display: none;
   }
 
   .lm-about-collage__tile--right {
-    width: 238px;
-    height: 108px;
-    left: 112px;
-    top: 0;
+    display: none;
   }
 
   .lm-about-collage__tile--large {
-    width: 254px;
-    height: 172px;
-    left: 96px;
-    top: 298px;
+    display: none;
   }
 
   .lm-company-table .row {
