@@ -1439,9 +1439,9 @@ html body {
   padding-bottom: 28px; border-bottom: 1px solid rgba(17,17,17,.18);
 }
 .lm-footer__brand {
-  font: 700 56px/.95 var(--font-en); letter-spacing: -.01em; color: #111;
+  display: inline-flex; align-items: center;
 }
-.lm-footer__brand-dot { color: rgba(17,17,17,.18); }
+.lm-footer__brand img { height: 56px; width: auto; display: block; }
 .lm-footer__tagline {
   font: 600 11px/1 var(--font-en); letter-spacing: .24em;
   color: rgba(17,17,17,.55); text-align: right;
@@ -2236,7 +2236,11 @@ html body {
   }
 
   .lm-footer__brand {
-    font-size: 40px;
+    align-self: start;
+  }
+
+  .lm-footer__brand img {
+    height: 40px;
   }
 
   .lm-footer__tagline {

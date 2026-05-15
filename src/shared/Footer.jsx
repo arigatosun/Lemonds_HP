@@ -23,9 +23,9 @@ function Footer() {
     <footer className="lm-footer">
       {/* compact wordmark + tagline */}
       <div className="lm-footer__top">
-        <div aria-hidden="true" className="lm-footer__brand">
-          LEMONDS<span className="lm-footer__brand-dot">.</span>
-        </div>
+        <a href="index.html" className="lm-footer__brand">
+          <img src="assets/lemonds-logo-brand.png" alt="LEMONDS ENTERTAINMENT Co.,Ltd"/>
+        </a>
         <div className="lm-footer__tagline">
           ENTERTAINMENT Co.,Ltd · TURNING IDEAS INTO MEANINGFUL VALUE
         </div>
