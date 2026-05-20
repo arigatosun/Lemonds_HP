@@ -128,6 +128,7 @@ $lemonds_includes = [
     'inc/taxonomy-works-category.php',
     'inc/taxonomy-news-category.php',
     'inc/meta-box-works.php',
+    'inc/cf7-tweaks.php',
 ];
 foreach ($lemonds_includes as $lemonds_inc) {
     $lemonds_inc_path = get_template_directory() . '/' . $lemonds_inc;
