@@ -8,8 +8,8 @@
  *   - src/home/Hero.jsx
  *   - src/home/ServiceGrid.jsx
  *   - src/home/Production.jsx
- *   - src/home/Works.jsx        ※ Wave 4 で WP_Query 化予定
- *   - src/home/News.jsx         ※ Wave 4 で WP_Query 化予定
+ *   - src/home/Works.jsx        ※ Wave 4 で WP_Query 化済（is_featured 優先 5 件）
+ *   - src/home/News.jsx         ※ Wave 4 で WP_Query 化済（新しい順 5 件）
  *   - src/home/Company.jsx
  *   - src/home/Contact.jsx
  *
@@ -87,33 +87,71 @@ $production_steps = [
 ];
 
 // ─────────────────────────────────────────────
-// Works プレビュー（TODO(Wave 4): WP_Query 化）
-// is_featured=true 優先 5 件、不足分は新しい順で補完する仕様。
-// 現状は JSX の仮配列をそのまま転記。
+// Works プレビュー（schema-registry §7）
+// Phase A: is_featured=1 を sort_order 昇順で最大 5 件取得
+// Phase B: 不足分を「is_featured 不問の新しい順」で補完（Phase A と重複除外）
 // ─────────────────────────────────────────────
-// TODO(Wave 4): 以下の $works_preview を WP_Query で取得した投稿に差し替える。
-// posts_per_page=5, meta_query で is_featured=1 優先 + post_date DESC で補完。
-$works_preview = [
-    ['img' => 'top-works-live-goods.jpg',         'category' => 'EVENT / LIVE',      'title' => '某ライブ公演向けグッズ制作',         'copy' => '数千名規模の公演で配布する一体感をつくるグッズの企画〜量産。',           'date' => '2026.04.10'],
-    ['img' => 'top-works-cosmetics-package.jpg',  'category' => 'COSMETICS',         'title' => '新コスメブランドのパッケージ設計',   'copy' => 'ブランド世界観を表現するパッケージとノベルティのデザイン・調達。',         'date' => '2026.03.22'],
-    ['img' => 'top-works-package-renewal.jpg',    'category' => 'PACKAGE RENEWAL',   'title' => '既存パッケージのリニューアル',       'copy' => '量販店向けパッケージを刷新し、店頭での視認性を改善。',                     'date' => '2026.02.15'],
-    ['img' => 'top-works-apparel-md.jpg',         'category' => 'APPAREL / MD',      'title' => '販売用アパレル商品の量産対応',       'copy' => '販売を見据えたMD商品として、量産・在庫管理まで一貫対応。',                'date' => '2026.01.30'],
-    ['img' => 'top-works-promotion-novelty.jpg',  'category' => 'PROMOTION',         'title' => 'プロモーション施策ノベルティ',       'copy' => '販促キャンペーンで配布するノベルティの企画・小ロット製造。',              'date' => '2025.12.18'],
-];
+$works_preview_posts = [];
+$works_preview_limit = 5;
+
+// Phase A: トップ掲載候補（is_featured=1）を sort_order 昇順で取得
+$works_phase_a_query = new WP_Query([
+    'post_type'      => 'works',
+    'post_status'    => 'publish',
+    'posts_per_page' => $works_preview_limit,
+    'meta_query'     => [
+        [
+            'key'     => 'is_featured',
+            'value'   => '1',
+            'compare' => '=',
+        ],
+    ],
+    'meta_key'       => 'sort_order',
+    'orderby'        => [
+        'meta_value_num' => 'ASC',
+        'date'           => 'DESC',
+    ],
+    'no_found_rows'  => true,
+]);
+if ($works_phase_a_query->have_posts()) {
+    $works_preview_posts = $works_phase_a_query->posts;
+}
+wp_reset_postdata();
+
+// Phase B: 不足分を新しい順で補完（Phase A の ID は除外）
+$works_phase_b_needed = $works_preview_limit - count($works_preview_posts);
+if ($works_phase_b_needed > 0) {
+    $works_phase_a_ids = wp_list_pluck($works_preview_posts, 'ID');
+    $works_phase_b_query = new WP_Query([
+        'post_type'      => 'works',
+        'post_status'    => 'publish',
+        'posts_per_page' => $works_phase_b_needed,
+        'post__not_in'   => !empty($works_phase_a_ids) ? $works_phase_a_ids : [0],
+        'orderby'        => 'date',
+        'order'          => 'DESC',
+        'no_found_rows'  => true,
+    ]);
+    if ($works_phase_b_query->have_posts()) {
+        $works_preview_posts = array_merge($works_preview_posts, $works_phase_b_query->posts);
+    }
+    wp_reset_postdata();
+}
 
 // ─────────────────────────────────────────────
-// News プレビュー（TODO(Wave 4): WP_Query 化）
-// 新しい順 5 件。
+// News プレビュー（schema-registry §7）
+// 新しい順 5 件
 // ─────────────────────────────────────────────
-// TODO(Wave 4): 以下の $news_preview を WP_Query で取得した投稿に差し替える。
-// post_type=news, posts_per_page=5, orderby=date DESC。
-$news_preview = [
-    ['date' => '2026.04.10', 'category' => 'PRESS',   'title' => '健康サポート機器・グッズ事業の新規取り扱いブランドが決定しました。'],
-    ['date' => '2026.03.22', 'category' => 'NOTICE',  'title' => 'ゴールデンウィーク期間中の休業日についてのお知らせ。'],
-    ['date' => '2026.02.28', 'category' => 'PROJECT', 'title' => '某ライブ公演グッズの制作実績を公開しました。'],
-    ['date' => '2026.01.15', 'category' => 'COMPANY', 'title' => '本社オフィス移転のお知らせ（新宿区内）。'],
-    ['date' => '2025.12.18', 'category' => 'PRESS',   'title' => 'オンラインガチャ事業のサービス提供を開始しました。'],
-];
+$news_preview_limit = 5;
+$news_preview_query = new WP_Query([
+    'post_type'      => 'news',
+    'post_status'    => 'publish',
+    'posts_per_page' => $news_preview_limit,
+    'orderby'        => 'date',
+    'order'          => 'DESC',
+    'no_found_rows'  => true,
+]);
+$news_preview_posts = $news_preview_query->have_posts() ? $news_preview_query->posts : [];
+wp_reset_postdata();
 
 get_header();
 ?>
@@ -232,8 +270,10 @@ get_header();
 
     <!-- ============================================================
          WORKS（移植元: src/home/Works.jsx）
-         TODO(Wave 4): WP_Query 化（is_featured 優先 5 件）
+         WP_Query: is_featured=1 優先 5 件 + 不足分は新しい順で補完
+         投稿が 0 件の場合はセクション自体を非表示にする。
          ============================================================ -->
+    <?php if (!empty($works_preview_posts)) : ?>
     <section class="lm-section" data-screen-label="06 Works">
         <div class="lm-section-head">
             <div>
@@ -247,44 +287,70 @@ get_header();
         </div>
 
         <?php
-        // TODO(Wave 4): WP_Query から取得した posts に置き換える。
-        $works_primary   = array_slice($works_preview, 0, 3);
-        $works_secondary = array_slice($works_preview, 3);
+        // 先頭 3 件を 3 カラム、残り（最大 2 件）を 2 カラムで配置
+        $works_primary   = array_slice($works_preview_posts, 0, 3);
+        $works_secondary = array_slice($works_preview_posts, 3);
         ?>
 
         <div class="lm-grid lm-grid--3">
-            <?php foreach ($works_primary as $w) : ?>
-                <a class="lm-news-card" href="<?php echo esc_url(lemonds_url('works')); ?>">
-                    <div class="lm-news-card__image" style="background-image:url(<?php echo esc_url(lemonds_img($w['img'])); ?>)"></div>
+            <?php foreach ($works_primary as $w_post) : ?>
+                <?php
+                $w_id        = $w_post->ID;
+                $w_permalink = get_permalink($w_post);
+                $w_title     = get_the_title($w_post);
+                $w_excerpt   = get_the_excerpt($w_post);
+                $w_date      = mysql2date('Y.m.d', $w_post->post_date);
+                $w_category  = lemonds_works_category_label($w_id);
+                $w_thumb_url = get_the_post_thumbnail_url($w_id, 'large');
+                if (!$w_thumb_url) {
+                    $w_thumb_url = lemonds_img('photo-merch-flatlay.jpg');
+                }
+                ?>
+                <a class="lm-news-card" href="<?php echo esc_url($w_permalink); ?>">
+                    <div class="lm-news-card__image" style="background-image:url(<?php echo esc_url($w_thumb_url); ?>)"></div>
                     <div class="label">
-                        <span class="eyebrow"><?php echo esc_html($w['category']); ?></span>
-                        <span class="title"><?php echo esc_html($w['title']); ?></span>
-                        <?php if (!empty($w['copy'])) : ?>
-                            <span class="copy"><?php echo esc_html($w['copy']); ?></span>
+                        <span class="eyebrow"><?php echo esc_html($w_category); ?></span>
+                        <span class="title"><?php echo esc_html($w_title); ?></span>
+                        <?php if ($w_excerpt !== '') : ?>
+                            <span class="copy"><?php echo esc_html($w_excerpt); ?></span>
                         <?php endif; ?>
-                        <span class="date"><?php echo esc_html($w['date']); ?></span>
+                        <span class="date"><?php echo esc_html($w_date); ?></span>
                     </div>
                     <span class="arrow">&rarr;</span>
                 </a>
             <?php endforeach; ?>
         </div>
 
+        <?php if (!empty($works_secondary)) : ?>
         <div class="lm-grid lm-grid--2 lm-grid--works-secondary">
-            <?php foreach ($works_secondary as $w) : ?>
-                <a class="lm-news-card" href="<?php echo esc_url(lemonds_url('works')); ?>">
-                    <div class="lm-news-card__image" style="background-image:url(<?php echo esc_url(lemonds_img($w['img'])); ?>)"></div>
+            <?php foreach ($works_secondary as $w_post) : ?>
+                <?php
+                $w_id        = $w_post->ID;
+                $w_permalink = get_permalink($w_post);
+                $w_title     = get_the_title($w_post);
+                $w_excerpt   = get_the_excerpt($w_post);
+                $w_date      = mysql2date('Y.m.d', $w_post->post_date);
+                $w_category  = lemonds_works_category_label($w_id);
+                $w_thumb_url = get_the_post_thumbnail_url($w_id, 'large');
+                if (!$w_thumb_url) {
+                    $w_thumb_url = lemonds_img('photo-merch-flatlay.jpg');
+                }
+                ?>
+                <a class="lm-news-card" href="<?php echo esc_url($w_permalink); ?>">
+                    <div class="lm-news-card__image" style="background-image:url(<?php echo esc_url($w_thumb_url); ?>)"></div>
                     <div class="label">
-                        <span class="eyebrow"><?php echo esc_html($w['category']); ?></span>
-                        <span class="title"><?php echo esc_html($w['title']); ?></span>
-                        <?php if (!empty($w['copy'])) : ?>
-                            <span class="copy"><?php echo esc_html($w['copy']); ?></span>
+                        <span class="eyebrow"><?php echo esc_html($w_category); ?></span>
+                        <span class="title"><?php echo esc_html($w_title); ?></span>
+                        <?php if ($w_excerpt !== '') : ?>
+                            <span class="copy"><?php echo esc_html($w_excerpt); ?></span>
                         <?php endif; ?>
-                        <span class="date"><?php echo esc_html($w['date']); ?></span>
+                        <span class="date"><?php echo esc_html($w_date); ?></span>
                     </div>
                     <span class="arrow">&rarr;</span>
                 </a>
             <?php endforeach; ?>
         </div>
+        <?php endif; ?>
 
         <div class="lm-section-action lm-section-action--center">
             <a href="<?php echo esc_url(lemonds_url('works')); ?>" class="lm-pill-outline lm-pill-outline--section-action">
@@ -292,11 +358,14 @@ get_header();
             </a>
         </div>
     </section>
+    <?php endif; // works_preview_posts ?>
 
     <!-- ============================================================
          NEWS（移植元: src/home/News.jsx）
-         TODO(Wave 4): WP_Query 化（新しい順 5 件）
+         WP_Query: post_type=news, posts_per_page=5, date DESC
+         投稿が 0 件の場合はセクション自体を非表示にする。
          ============================================================ -->
+    <?php if (!empty($news_preview_posts)) : ?>
     <section class="lm-section" data-screen-label="07 News">
         <div class="lm-section-head">
             <div>
@@ -310,12 +379,19 @@ get_header();
         </div>
 
         <ul class="lm-news-list">
-            <?php foreach ($news_preview as $n) : ?>
+            <?php foreach ($news_preview_posts as $n_post) : ?>
+                <?php
+                $n_id        = $n_post->ID;
+                $n_permalink = get_permalink($n_post);
+                $n_date      = mysql2date('Y.m.d', $n_post->post_date);
+                $n_category  = lemonds_news_category_label($n_id);
+                $n_title     = get_the_title($n_post);
+                ?>
                 <li class="lm-news-row">
-                    <a class="lm-news-row__link" href="<?php echo esc_url(lemonds_url('news')); ?>">
-                        <span class="date"><?php echo esc_html($n['date']); ?></span>
-                        <span class="cat"><?php echo esc_html($n['category']); ?></span>
-                        <span class="title"><?php echo esc_html($n['title']); ?></span>
+                    <a class="lm-news-row__link" href="<?php echo esc_url($n_permalink); ?>">
+                        <span class="date"><?php echo esc_html($n_date); ?></span>
+                        <span class="cat"><?php echo esc_html($n_category); ?></span>
+                        <span class="title"><?php echo esc_html($n_title); ?></span>
                         <span class="arrow">&rarr;</span>
                     </a>
                 </li>
@@ -328,6 +404,7 @@ get_header();
             </a>
         </div>
     </section>
+    <?php endif; // news_preview_posts ?>
 
     <!-- ============================================================
          COMPANY（移植元: src/home/Company.jsx）

@@ -1,3 +1,77 @@
+# ════════════════════════════════════════════════════════════════════════════
+# 【LEMONDS テーマ納品用 参考 .htaccess】
+#
+# ⚠️ 重要:
+#   このファイルは「テーマ納品用の参考ファイル」です。
+#   テーマディレクトリ内に置いても自動的には効きません。
+#   実適用先は WordPress ルートの `.htaccess`（例: `app/public/.htaccess`）です。
+#
+# 適用手順:
+#   1. 本番サーバーの WordPress ルートにある `.htaccess` を開く
+#   2. 下記 “LEMONDS: 旧 .html → 新 permalink 301 リダイレクト” ブロック
+#      （==== で囲まれた部分）を、WordPress 本体のリライトブロック
+#      （`# BEGIN WordPress` ～ `# END WordPress`）の **直前** に貼り付ける
+#   3. 保存して 301 が効くかブラウザで確認
+#
+# 参照: .claude/plans/schema-registry.md §6 内部リンク変換マップ
+#       theme/lemonds/inc/redirect-map.md（適用手順 / Nginx 対応 / 撤去判断）
+# ════════════════════════════════════════════════════════════════════════════
+
+
+# ════════════════════════════════════════════════════════════════════════════
+# LEMONDS: 旧 .html → 新 permalink への 301 リダイレクト
+# （本番ルート .htaccess の `# BEGIN WordPress` より前に配置すること）
+# ════════════════════════════════════════════════════════════════════════════
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+    # RewriteBase は本番サーバーのドキュメントルート構成に合わせて調整可。
+    # サブディレクトリ運用なら `RewriteBase /sub/` のように変更する。
+    RewriteBase /
+
+    # ─────────────────────────────────────────────────────────────
+    # 1) クエリ付き URL（先に評価する必要があるためトップに置く）
+    # ─────────────────────────────────────────────────────────────
+
+    # /contact.html?type=quote → /contact/?type=quote
+    # QSA フラグで既存クエリを引き継ぐ
+    RewriteCond %{QUERY_STRING} (^|&)type=quote(&|$) [NC]
+    RewriteRule ^contact\.html$ /contact/ [R=301,L,QSA]
+
+    # /works-detail.html?slug=xxx → /works/ （PHP 側で個別投稿へ振り分け）
+    # single-works.php 冒頭の `$_GET['slug']` 受け処理が permalink へ更に 301 する
+    RewriteCond %{QUERY_STRING} (^|&)slug=[^&]+ [NC]
+    RewriteRule ^works-detail\.html$ /works/ [R=301,L,QSA]
+
+    # /news-detail.html?slug=xxx → /news/ （PHP 側で個別投稿へ振り分け）
+    # single-news.php 冒頭の `$_GET['slug']` 受け処理が permalink へ更に 301 する
+    RewriteCond %{QUERY_STRING} (^|&)slug=[^&]+ [NC]
+    RewriteRule ^news-detail\.html$ /news/ [R=301,L,QSA]
+
+    # クエリなしの -detail.html も一覧へフォールバック
+    RewriteRule ^works-detail\.html$ /works/ [R=301,L]
+    RewriteRule ^news-detail\.html$  /news/  [R=301,L]
+
+    # ─────────────────────────────────────────────────────────────
+    # 2) 通常の静的 .html → permalink
+    # ─────────────────────────────────────────────────────────────
+
+    # トップページ
+    RewriteRule ^index\.html$           /                  [R=301,L]
+
+    # 主要固定ページ
+    RewriteRule ^services\.html$        /services/         [R=301,L]
+    RewriteRule ^works\.html$           /works/            [R=301,L]
+    RewriteRule ^news\.html$            /news/             [R=301,L]
+    RewriteRule ^company\.html$         /company/          [R=301,L]
+    RewriteRule ^contact\.html$         /contact/          [R=301,L]
+    RewriteRule ^contact-thanks\.html$  /contact/thanks/   [R=301,L]
+    RewriteRule ^policy\.html$          /policy/           [R=301,L]
+</IfModule>
+# ════════════════════════════════════════════════════════════════════════════
+# / LEMONDS リダイレクトブロック ここまで
+# ════════════════════════════════════════════════════════════════════════════
+
+
 # BEGIN WordPress
 # 「BEGIN WordPress」と「END WordPress」の間のディレクティブ (行) は動的に生成され、
 # WordPress フィルターによってのみ変更されるべきです。
@@ -12,34 +86,3 @@ RewriteCond %{REQUEST_FILENAME} !-d
 RewriteRule . /index.php [L]
 </IfModule>
 # END WordPress
-
-# ─────────────────────────────────────────────────────────────
-# LEMONDS: 旧 .html URL → 新 permalink への 301 リダイレクト
-# 参照: .claude/plans/schema-registry.md §6
-# ─────────────────────────────────────────────────────────────
-<IfModule mod_rewrite.c>
-RewriteEngine On
-
-# トップページ
-RewriteRule ^index\.html$ / [R=301,L]
-
-# 主要固定ページ
-RewriteRule ^services\.html$ /services/ [R=301,L]
-RewriteRule ^works\.html$ /works/ [R=301,L]
-RewriteRule ^news\.html$ /news/ [R=301,L]
-RewriteRule ^company\.html$ /company/ [R=301,L]
-RewriteRule ^contact\.html$ /contact/ [R=301,L]
-RewriteRule ^contact-thanks\.html$ /contact/thanks/ [R=301,L]
-RewriteRule ^policy\.html$ /policy/ [R=301,L]
-
-# クエリ付き URL（contact.html?type=quote）
-# /contact/?type=quote へ。クエリ部分はそのまま QSA で引き継ぐ
-RewriteCond %{QUERY_STRING} (^|&)type=quote(&|$)
-RewriteRule ^contact\.html$ /contact/ [R=301,L,QSA]
-
-# 詳細ページのクエリ受け（works-detail.html?slug=xxx / news-detail.html?slug=xxx）
-# は PHP 側（single-works.php / single-news.php の冒頭）で
-# $_GET['slug'] を見て wp_redirect() するロジックで処理する。
-# ここでは静的部分のみハンドリング。
-# ─────────────────────────────────────────────────────────────
-</IfModule>
