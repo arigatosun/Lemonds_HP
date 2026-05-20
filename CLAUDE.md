@@ -24,7 +24,9 @@
 
 ---
 
-## 進捗ステータス（最終更新: 2026-05-20）
+## 進捗ステータス（最終更新: 2026-05-20 終礼前 / 水曜終了時点）
+
+### Phase / Wave（コード本体）
 
 | Phase | 内容 | コミット | 状況 |
 |---|---|---|:---:|
@@ -33,11 +35,69 @@
 | 2 (Wave 2) | 静的ページ 6 枚を PHP テンプレに移植 | `c6fe589` | ✅ |
 | 3 (Wave 3) | CPT archive/single + seed + CF7 | `d1513b7` | ✅ |
 | 4 (Wave 4) | front-page WP_Query + SEO + 301 リダイレクト | `94c1a66` | ✅ |
-| **5-A** | site.css の SP レスポンシブ仕上げ (375-560px) | — | ⏳ 未 |
-| **5-B** | QA レポート (qa-findings.md 起票) | — | ⏳ 未 |
-| **6** | テーマ .zip / DB エクスポート / README 納品手順書 | — | ⏳ 未 |
+| **5-A** | site.css の SP レスポンシブ仕上げ (375-560px) | — | ⏳ 木曜予定 |
+| **5-B** | QA レポート (qa-findings.md 起票) | — | ⏳ 木曜予定 |
+| **6** | テーマ .zip / DB エクスポート / README 納品手順書 | — | ⏳ 金曜予定 |
+
+### Local セットアップ（`docs/local-setup-guide.md` 参照）
+
+| Step | 内容 | 状況 |
+|---|---|:---:|
+| 1 | Local Site folder パス確認 (`C:\Users\OWNER\Local Sites\lemonds`) | ✅ |
+| 2 | テーマファイル配置 (mklink /J ジャンクション作成済) | ✅ |
+| 3 | LEMONDS ENTERTAINMENT テーマを activate | ✅ |
+| 4 | パーマリンク「投稿名」設定 | ✅ |
+| 5 | Contact Form 7 + WP Mail SMTP 有効化 | ✅ |
+| 6 | 固定ページ 5 枚作成 (services / company / contact / thanks / policy) | ✅ |
+| **7** | **CF7 フォーム作成 + メール設定** | 🔶 **7-1（マークアップ貼付）の途中で中断** |
+| 8 | CF7 フォーム ID を `page-contact.php` に埋め込み | ⏳ |
+| 9 | WP-CLI で seed 実行 (works 9 件 / news 8 件) | ⏳ |
+| 10 | 全 URL ブラウザ確認 | ⏳ |
+| 11 | qa-findings.md に気になった点を起票 | ⏳ |
 
 最新の状況は `git log --oneline -10` で確認すること。
+
+---
+
+## 🔁 次セッション再開ポイント（2026-05-20 17:30 終礼前 中断）
+
+### 前回終了時点の状況
+- コード本体 (Phase 0-4) は全て main にコミット済み、稼働中
+- Local 環境はテーマ activate + 固定ページ 5 枚作成済み、フロント `http://lemonds.local/` で front-page.php が正しく描画されることを確認済み
+- Step 7-1 (CF7 フォームマークアップ貼り付け) を案内したところで終礼に入ったため、貼り付け実施は未確認
+
+### 新セッション開始時に最初にやること
+
+1. **CLAUDE.md と git log の確認**
+   ```
+   git log --oneline -10
+   ```
+2. **ユーザーに 1 つだけ確認**：「昨日案内した Step 7-1（CF7 フォームのマークアップ貼り付け）は完了済みでしょうか？」
+   - 完了 → Step 7-2（メールタブの管理者通知設定）から再開
+   - 未完了 → `theme/lemonds/inc/cf7-mail-template.md` §2 のマークアップを再案内
+3. **マネージャーモード継続**：1 ステップずつ細かく指示、TaskCreate で進捗を可視化する
+
+### Step 7 以降のリマインダー（手順詳細）
+
+| Sub | 内容 | 参照 |
+|---|---|---|
+| 7-1 | CF7「フォーム」タブにマークアップ貼り付け | `inc/cf7-mail-template.md` §2 / `inc/cf7-mail-template.php` の `LEMONDS_CF7_FORM_MARKUP` |
+| 7-2 | CF7「メール」タブで管理者通知を設定 | 同 §3 / `LEMONDS_CF7_MAIL_ADMIN_*` |
+| 7-3 | CF7「メール (2)」タブで自動返信を設定 + 保存 → フォーム ID 取得 | 同 §4・§6-1 |
+| 8 | `page-contact.php` の `CF7_FORM_ID` を実 ID に置換 | 同 §6-2 |
+| 9 | WP-CLI で seed 実行 (`wp eval-file wp-content/themes/lemonds/inc/seed-works.php`) | `docs/local-setup-guide.md` Step 8 |
+| 10 | 全 URL チェック | `docs/local-setup-guide.md` Step 10 |
+| 11 | qa-findings.md 起票 | 新規作成 `.claude/plans/qa-findings.md` |
+
+### 木曜の残り工数見込み
+- Step 7-11 (Local セットアップ完了): 1-2h
+- Wave 5-A + 5-B 並列起動 + 修正対応: 3-4h
+- → 合計 4-6h
+
+### 金曜の残り工数見込み
+- Wave 6 (テーマ .zip / DB エクスポート / 移行手順書): 2-3h
+- クライアント送付準備: 1h
+- → 合計 3-4h
 
 ---
 
