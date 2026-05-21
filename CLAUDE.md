@@ -24,7 +24,7 @@
 
 ---
 
-## 進捗ステータス（最終更新: 2026-05-20 終礼前 / 水曜終了時点）
+## 進捗ステータス（最終更新: 2026-05-21 13:30 / 木曜 14:00 プルーセル MTG 前 中断）
 
 ### Phase / Wave（コード本体）
 
@@ -35,36 +35,40 @@
 | 2 (Wave 2) | 静的ページ 6 枚を PHP テンプレに移植 | `c6fe589` | ✅ |
 | 3 (Wave 3) | CPT archive/single + seed + CF7 | `d1513b7` | ✅ |
 | 4 (Wave 4) | front-page WP_Query + SEO + 301 リダイレクト | `94c1a66` | ✅ |
-| **5-A** | site.css の SP レスポンシブ仕上げ (375-560px) | — | ⏳ 木曜予定 |
-| **5-B** | QA レポート (qa-findings.md 起票) | — | ⏳ 木曜予定 |
+| 4.5 | CF7 設定反映 + works seed の PHP 8 互換性修正 | `56c28f3` | ✅ |
+| **5-A** | site.css の SP レスポンシブ仕上げ (375-560px) | — | ⏳ 木曜午後〜予定 |
+| **5-B** | QA レポート (qa-findings.md 起票) | — | ⏳ 木曜午後〜予定 |
 | **6** | テーマ .zip / DB エクスポート / README 納品手順書 | — | ⏳ 金曜予定 |
 
 ### Local セットアップ（`docs/local-setup-guide.md` 参照）
 
 | Step | 内容 | 状況 |
 |---|---|:---:|
-| 1 | Local Site folder パス確認 (`C:\Users\OWNER\Local Sites\lemonds`) | ✅ |
-| 2 | テーマファイル配置 (mklink /J ジャンクション作成済) | ✅ |
-| 3 | LEMONDS ENTERTAINMENT テーマを activate | ✅ |
-| 4 | パーマリンク「投稿名」設定 | ✅ |
-| 5 | Contact Form 7 + WP Mail SMTP 有効化 | ✅ |
-| 6 | 固定ページ 5 枚作成 (services / company / contact / thanks / policy) | ✅ |
-| **7** | **CF7 フォーム作成 + メール設定** | 🔶 **7-1（マークアップ貼付）の途中で中断** |
-| 8 | CF7 フォーム ID を `page-contact.php` に埋め込み | ⏳ |
-| 9 | WP-CLI で seed 実行 (works 9 件 / news 8 件) | ⏳ |
-| 10 | 全 URL ブラウザ確認 | ⏳ |
+| 1〜6 | Local 環境 + テーマ activate + 固定ページ 5 枚 | ✅ |
+| 7-1 | CF7「フォーム」タブにマークアップ貼り付け | ✅ |
+| 7-2 | CF7「メール」タブ（管理者通知）設定 | ✅ |
+| 7-3 | CF7「メール (2)」タブ（自動返信）設定 + 保存 | ✅ |
+| 8 | CF7 フォーム ID (`50e7785`) を `page-contact.php` に埋め込み | ✅ |
+| 9 | WP-CLI で seed 実行（works 9 件 / news 8 件） | ✅ |
+| **10** | **全 URL ブラウザ確認（HTML 旧版と左右比較）** | 🔶 **未着手、MTG 後再開** |
 | 11 | qa-findings.md に気になった点を起票 | ⏳ |
 
 最新の状況は `git log --oneline -10` で確認すること。
 
 ---
 
-## 🔁 次セッション再開ポイント（2026-05-20 17:30 終礼前 中断）
+## 🔁 次セッション再開ポイント（2026-05-21 13:30 中断 / 14:00 プルーセル MTG 後再開予定）
 
 ### 前回終了時点の状況
-- コード本体 (Phase 0-4) は全て main にコミット済み、稼働中
-- Local 環境はテーマ activate + 固定ページ 5 枚作成済み、フロント `http://lemonds.local/` で front-page.php が正しく描画されることを確認済み
-- Step 7-1 (CF7 フォームマークアップ貼り付け) を案内したところで終礼に入ったため、貼り付け実施は未確認
+- コード本体 + CF7 設定 + seed 投入まで完了（`56c28f3` まで push 済み）
+- Works 9 件 (ID 30-44) / News 8 件 (ID 22-29) が DB 投入済み
+- CF7 フォーム ID = **`50e7785`**、`page-contact.php` に反映済み
+- WP_DEBUG / WP_DEBUG_LOG は ON、WP_DEBUG_DISPLAY は OFF にして締めた想定（要確認）
+- ブラウザ動作確認は未着手、HTML 旧版との左右比較を MTG 後にやる予定
+
+### Step 9 で発生して解決済みのトラブル（再発したら参照）
+- `register_post_meta('works', 'sort_order', ['sanitize_callback' => 'intval'])` が PHP 8 で `ArgumentCountError: intval() expects at most 2 arguments, 4 given` を起こす → `intval` を `absint` に差し替えで解決（`cpt-works.php:88-95`）
+- 同様の症状が他の CPT meta で出たら同じ手で直す（PHP 8 内部関数は引数数チェックが厳格、WP のフィルタは 4 引数渡してくる）
 
 ### 新セッション開始時に最初にやること
 
@@ -72,32 +76,26 @@
    ```
    git log --oneline -10
    ```
-2. **ユーザーに 1 つだけ確認**：「昨日案内した Step 7-1（CF7 フォームのマークアップ貼り付け）は完了済みでしょうか？」
-   - 完了 → Step 7-2（メールタブの管理者通知設定）から再開
-   - 未完了 → `theme/lemonds/inc/cf7-mail-template.md` §2 のマークアップを再案内
-3. **マネージャーモード継続**：1 ステップずつ細かく指示、TaskCreate で進捗を可視化する
+2. **ユーザーに 1 つだけ確認**: 「Step 10（ブラウザでの全 URL 動作確認）を開始しますか？ HTML 旧版を `python -m http.server 8000` で並走させて左右比較する想定で進めて OK？」
+3. **HTML 旧版起動の案内**: 新ターミナルで `cd C:\Users\OWNER\Desktop\Project\rumoen\Lemonds_HP` → `python -m http.server 8000`。  
+   旧版 = `http://localhost:8000/` / 新版 = `http://lemonds.local/`
+4. **URL 対応表** はチャット末尾参照、または再生成（front / services / company / contact / policy / works archive / works single / news archive / news single + 301 リダイレクト 4 種）
+5. **マネージャーモード継続**: ページ単位で「ここ違う/ここ OK」をユーザーが報告 → 差分は `.claude/plans/qa-findings.md` に severity 付きで記録
 
-### Step 7 以降のリマインダー（手順詳細）
+### Step 10 終了後にやること
 
-| Sub | 内容 | 参照 |
-|---|---|---|
-| 7-1 | CF7「フォーム」タブにマークアップ貼り付け | `inc/cf7-mail-template.md` §2 / `inc/cf7-mail-template.php` の `LEMONDS_CF7_FORM_MARKUP` |
-| 7-2 | CF7「メール」タブで管理者通知を設定 | 同 §3 / `LEMONDS_CF7_MAIL_ADMIN_*` |
-| 7-3 | CF7「メール (2)」タブで自動返信を設定 + 保存 → フォーム ID 取得 | 同 §4・§6-1 |
-| 8 | `page-contact.php` の `CF7_FORM_ID` を実 ID に置換 | 同 §6-2 |
-| 9 | WP-CLI で seed 実行 (`wp eval-file wp-content/themes/lemonds/inc/seed-works.php`) | `docs/local-setup-guide.md` Step 8 |
-| 10 | 全 URL チェック | `docs/local-setup-guide.md` Step 10 |
-| 11 | qa-findings.md 起票 | 新規作成 `.claude/plans/qa-findings.md` |
+| 順序 | 内容 |
+|---|---|
+| Step 11 | `.claude/plans/qa-findings.md` を新規作成し、Step 10 で見つけた issue を severity (High/Mid/Low) 付きで記録 |
+| Wave 5-A | `responsive-fixer` Agent 起動: `theme/lemonds/assets/css/site.css` の SP 375-560px 仕上げ |
+| Wave 5-B | `qa-reviewer` Agent 起動: 静的解析（リンク切れ / エスケープ漏れ / コンソールエラー）。Wave 5-A と並列発射可 |
+| 5-A/5-B 完了 | 致命/中重要度 issue を修正対応 → コミット |
+| Wave 6 | テーマ .zip パッケージング / DB `.sql.gz` エクスポート / 移行手順書 README → クライアント納品 |
 
-### 木曜の残り工数見込み
-- Step 7-11 (Local セットアップ完了): 1-2h
-- Wave 5-A + 5-B 並列起動 + 修正対応: 3-4h
-- → 合計 4-6h
-
-### 金曜の残り工数見込み
-- Wave 6 (テーマ .zip / DB エクスポート / 移行手順書): 2-3h
-- クライアント送付準備: 1h
-- → 合計 3-4h
+### 残り工数見込み（5/22 金曜納品まで）
+- Step 10 + 11 + Wave 5 + 修正対応: 4-5h
+- Wave 6 + クライアント送付準備: 2-3h
+- → 合計 6-8h（木曜午後〜金曜）
 
 ---
 
