@@ -90,7 +90,8 @@ function lemonds_register_post_meta_works() {
         'single'            => true,
         'show_in_rest'      => true,
         'default'           => 0,
-        'sanitize_callback' => 'intval',
+        // PHP 8 では intval が4引数で呼ばれると ArgumentCountError を起こすため absint を使用
+        'sanitize_callback' => 'absint',
         'auth_callback'     => $auth_callback,
     ]);
 }

@@ -42,20 +42,7 @@ get_template_part('template-parts/page-hero', null, [
 <main class="lm-page lm-page--contact">
     <section class="lm-section" style="padding-top: 0;">
         <div class="lm-form">
-            <?php
-            /**
-             * TODO(Wave 3 form-builder): CF7_FORM_ID をフォーム実 ID に置換
-             *
-             * 上記 .lm-form のラッパー内に CF7 が出力する <form> が入る。
-             * フォーム項目（inquiry_type[] / company / name / email / tel /
-             * message / attachment / privacy_consent）は CF7 側で定義する。
-             * `?type=quote` のチェック反映は assets/js/contact.js が担当。
-             *
-             * 参照: schema-registry.md §5 Contact フォーム
-             */
-            ?>
-            <!-- TODO(Wave 3 form-builder): CF7_FORM_ID をフォーム実 ID に置換 -->
-            <?= do_shortcode('[contact-form-7 id="CF7_FORM_ID" title="お問い合わせ"]') ?>
+            <?= do_shortcode('[contact-form-7 id="50e7785" title="お問い合わせ"]') ?>
 
             <p class="reply">
                 内容を確認のうえ、担当者より1〜2営業日以内にご連絡いたします。

@@ -78,7 +78,7 @@ if (!defined('LEMONDS_CF7_FORM_MARKUP')) {
 
 <div class="lm-form__row">
   <label>ファイル添付（任意、合計10MBまで）
-    [file attachment limit:10485760 filetypes:pdf|jpg|jpeg|png|doc|docx|xls|xlsx|ppt|pptx]
+    [file file_attachment limit:10485760 filetypes:pdf|jpg|jpeg|png|doc|docx|xls|xlsx|ppt|pptx]
   </label>
 </div>
 
@@ -123,7 +123,7 @@ TEL: [tel]
 内容:
 [message]
 ——
-添付: [attachment]
+添付: [file_attachment]
 
 --
 このメールは [_site_title] ([_site_url]) のお問い合わせフォームから送信されました。
