@@ -15,14 +15,26 @@ html body {
   overflow-y: visible;
 }
 
-/* Site header */
+/* Site header
+   - sticky 中も初期表示時の上余白を保持するため top にオフセットを取る
+   - WP 管理バー (32px / 46px) 表示中はその下に来るよう admin-bar クラスで加算 */
 .lm-header {
-  position: sticky; top: 0; z-index: 50;
+  position: sticky;
+  top: var(--lm-header-offset, 24px);
+  z-index: 50;
   display: flex; align-items: center; justify-content: space-between;
   padding: 32px var(--lm-content-x) 24px;
   background: rgba(244,244,244,0.94);
   backdrop-filter: saturate(140%) blur(8px);
   -webkit-backdrop-filter: saturate(140%) blur(8px);
+}
+body.admin-bar {
+  --lm-header-offset: 56px; /* 32px admin bar + 24px 余白 */
+}
+@media screen and (max-width: 782px) {
+  body.admin-bar {
+    --lm-header-offset: 70px; /* 46px モバイル admin bar + 24px 余白 */
+  }
 }
 .lm-header__logo { display: inline-flex; }
 .lm-header__logo img { height: 40px; width: auto; display: block; }

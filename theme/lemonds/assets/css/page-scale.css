@@ -7,6 +7,26 @@ html, body {
   overflow-x: hidden;
 }
 
+/* sticky ヘッダー分のスクロールオフセット
+   (アンカーリンクや section ジャンプ時に heading がヘッダー裏に隠れないように)
+   --lm-header-h は @media で widthごとに上書き */
+:root {
+  --lm-header-h: 100px;
+}
+html {
+  scroll-padding-top: var(--lm-header-h);
+}
+.lm-section,
+section[id] {
+  scroll-margin-top: var(--lm-header-h);
+}
+
+@media (max-width: 1024px) {
+  :root {
+    --lm-header-h: 80px;
+  }
+}
+
 #stage {
   width: 100%;
   height: var(--page-height, auto);

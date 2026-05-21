@@ -43,9 +43,6 @@ if (is_front_page()) {
 }
 ?>
 
-<div id="stage">
-  <div id="root"<?php if ($lemonds_screen_label !== '') echo ' data-screen-label="' . esc_attr($lemonds_screen_label) . '"'; ?>>
-
 <header class="lm-header">
     <a href="<?php echo esc_url(lemonds_url('home')); ?>" class="lm-header__logo">
         <?php if ($lemonds_logo) : ?>
@@ -85,3 +82,8 @@ if (is_front_page()) {
         </div>
     </div>
 </header>
+
+<!-- ヘッダーは sticky を有効にするため #stage > #root の外側に出す
+     (#stage の overflow:hidden / #root の transform:scale が sticky を無効化するため) -->
+<div id="stage">
+  <div id="root"<?php if ($lemonds_screen_label !== '') echo ' data-screen-label="' . esc_attr($lemonds_screen_label) . '"'; ?>>
