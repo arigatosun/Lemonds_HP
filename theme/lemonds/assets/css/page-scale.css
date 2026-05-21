@@ -18,3 +18,16 @@ html, body {
   transform-origin: top left;
   transform: scale(var(--page-scale, 1));
 }
+
+/* ≤1199px: page-scale を切って #root を viewport 幅にフィット
+   (page-scale.js も同じ閾値で scale=1 を返す) */
+@media (max-width: 1199px) {
+  #stage {
+    height: auto;
+    overflow: visible;
+  }
+  #root {
+    width: 100%;
+    transform: none;
+  }
+}

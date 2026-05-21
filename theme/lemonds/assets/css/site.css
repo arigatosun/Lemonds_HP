@@ -2430,92 +2430,6 @@ html body {
     font-size: 32px;
   }
 
-  .lm-company-about {
-    min-height: auto;
-  }
-
-  .lm-about-body {
-    isolation: isolate;
-    min-height: clamp(820px, 82vw, 860px);
-    padding: clamp(28px, 4vw, 44px) 0 clamp(210px, 24vw, 260px);
-    border-radius: 34px;
-    overflow: hidden;
-    background: transparent;
-  }
-
-  .lm-about-body::before {
-    content: "";
-    position: absolute;
-    inset: -24px 31% 24% -24px;
-    z-index: 1;
-    pointer-events: none;
-    background:
-      linear-gradient(105deg, rgba(244,244,244,.94) 0%, rgba(244,244,244,.86) 54%, rgba(244,244,244,.52) 76%, rgba(244,244,244,0) 100%),
-      radial-gradient(circle at 26% 32%, rgba(255,255,255,.82) 0 18%, rgba(255,255,255,0) 58%);
-    filter: blur(8px);
-  }
-
-  .lm-about-body .copy {
-    width: 100%;
-    max-width: min(680px, 63%);
-    padding: clamp(20px, 3vw, 32px) 0 0;
-    border-radius: 0;
-    background: transparent;
-    border: 0;
-    box-shadow: none;
-    backdrop-filter: none;
-    -webkit-backdrop-filter: none;
-  }
-
-  .lm-about-collage {
-    position: absolute;
-    inset: 0;
-    z-index: 0;
-    height: auto;
-    margin-top: 0;
-    overflow: visible;
-  }
-
-  .lm-about-collage__tile--edge {
-    width: clamp(132px, 18vw, 184px);
-    height: clamp(159px, 22vw, 222px);
-    left: -86px;
-    top: 36%;
-  }
-
-  .lm-about-collage__tile--left {
-    width: clamp(330px, 44vw, 460px);
-    height: clamp(202px, 27vw, 281px);
-    left: -76px;
-    top: auto;
-    bottom: 24px;
-  }
-
-  .lm-about-collage__tile--center {
-    width: clamp(360px, 46vw, 480px);
-    height: clamp(227px, 29vw, 303px);
-    left: auto;
-    right: -48px;
-    top: clamp(490px, 50vw, 520px);
-  }
-
-  .lm-about-collage__tile--right {
-    width: clamp(350px, 47vw, 480px);
-    height: clamp(158px, 21vw, 216px);
-    left: auto;
-    right: -128px;
-    top: -12px;
-  }
-
-  .lm-about-collage__tile--large {
-    width: clamp(300px, 38vw, 380px);
-    height: clamp(202px, 25.5vw, 256px);
-    left: auto;
-    right: -92px;
-    top: 250px;
-    bottom: auto;
-  }
-
   .lm-company-table .row {
     grid-template-columns: 1fr;
     gap: 10px;
@@ -2662,6 +2576,144 @@ html body {
   .lm-policy header h2 {
     max-width: 760px;
     font-size: 28px;
+  }
+}
+
+/* ──────────────────────────────────────────────────────────────
+   ABOUT US セクション — レスポンシブ再設計
+   - ≥1200px: PC 既存レイアウト（無変更）
+   - 768-1199px: editorial bento (center を hero として縦長配置)
+   - 561-767px: 同じ bento 構成のままタイルを少し詰める
+   - ≤560px: 2 列 grid に圧縮（large を最上段ヒーロー）
+   ────────────────────────────────────────────────────────────── */
+@media (max-width: 1199px) {
+  #root[data-screen-label="Company"] .lm-company-about,
+  .lm-company-about {
+    min-height: auto;
+    overflow: visible;
+  }
+
+  #root[data-screen-label="Company"] .lm-about-body,
+  .lm-about-body {
+    min-height: 0;
+    padding: 0;
+    background: transparent;
+    border-radius: 0;
+    overflow: visible;
+  }
+
+  .lm-about-body::before { display: none; }
+
+  /* セクション見出し / 説明文を viewport 連動でスケール
+     (page-scale を切った代わりに、font-size 側で viewport に追従させる) */
+  #root[data-screen-label="Company"] .lm-company-about .lm-section-head h2,
+  .lm-company-about .lm-section-head h2 {
+    font-size: clamp(36px, 5.2vw, 60px);
+    line-height: 1;
+  }
+  #root[data-screen-label="Company"] .lm-company-about .lm-section-head .ja,
+  .lm-company-about .lm-section-head .ja {
+    font-size: clamp(13px, 1.4vw, 17px);
+    margin-top: clamp(10px, 1.2vw, 16px);
+  }
+  #root[data-screen-label="Company"] .lm-about-body .copy p,
+  .lm-about-body .copy p {
+    font-size: clamp(13px, 1.4vw, 16px);
+    line-height: 1.86;
+    margin: 0 0 clamp(14px, 1.8vw, 22px);
+  }
+
+  /* copy: 行長を制限して読みやすく + 余裕ある下マージン */
+  #root[data-screen-label="Company"] .lm-about-body .copy,
+  .lm-about-body .copy {
+    position: static;
+    width: 100%;
+    max-width: clamp(420px, 62vw, 720px);
+    padding: 0;
+    margin: 0 0 clamp(32px, 5vw, 56px);
+    background: transparent;
+    border: 0;
+    border-radius: 0;
+    box-shadow: none;
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+  }
+
+  /* editorial bento: center を 1.6fr × 2 行スパンの hero に */
+  #root[data-screen-label="Company"] .lm-about-collage,
+  .lm-about-collage {
+    position: static;
+    display: grid;
+    grid-template-columns: 1.6fr 1fr 1fr;
+    grid-template-rows: 1fr 1fr;
+    gap: 16px;
+    inset: auto;
+    top: auto;
+    height: auto;
+    margin: 0;
+    pointer-events: auto;
+    transform: none;
+  }
+
+  /* タイル個別の絶対位置を全て解除し、grid アイテムとして整列 */
+  #root[data-screen-label="Company"] .lm-about-collage__tile,
+  .lm-about-collage__tile {
+    position: static;
+    left: auto;
+    right: auto;
+    top: auto;
+    bottom: auto;
+    width: 100%;
+    height: auto;
+    border-radius: 20px;
+    box-shadow: 0 14px 36px rgba(17,17,17,.08);
+  }
+
+  /* center: 左 1 列を 2 行ぶん使う縦長 hero。aspect 指定無しで cell を満たす */
+  .lm-about-collage__tile--center {
+    grid-column: 1;
+    grid-row: 1 / span 2;
+    aspect-ratio: auto;
+    border-radius: 28px;
+    box-shadow: 0 28px 72px rgba(17,17,17,.14);
+  }
+
+  /* 周辺 4 タイル: 2x2 グリッドで center を取り囲む */
+  .lm-about-collage__tile--edge   { grid-column: 2; grid-row: 1; aspect-ratio: 4 / 3; }
+  .lm-about-collage__tile--large  { grid-column: 3; grid-row: 1; aspect-ratio: 4 / 3; }
+  .lm-about-collage__tile--left   { grid-column: 2; grid-row: 2; aspect-ratio: 4 / 3; }
+  .lm-about-collage__tile--right  { grid-column: 3; grid-row: 2; aspect-ratio: 4 / 3; }
+}
+
+/* 狭いタブレット 561-767px: gap を縮めて密度を保つ */
+@media (min-width: 561px) and (max-width: 767px) {
+  .lm-about-collage {
+    gap: 10px;
+    grid-template-columns: 1.4fr 1fr 1fr;
+  }
+  .lm-about-collage__tile--center { border-radius: 22px; }
+  .lm-about-collage__tile { border-radius: 16px; }
+}
+
+/* モバイル ≤560px: 2 列 grid。large を最上段ヒーロー扱い */
+@media (max-width: 560px) {
+  .lm-about-collage {
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: auto;
+    gap: 10px;
+  }
+  /* span 解除を明示 */
+  .lm-about-collage__tile--center,
+  .lm-about-collage__tile--large {
+    grid-row: auto;
+  }
+  .lm-about-collage__tile--large  { grid-column: 1 / span 2; grid-row: 1; aspect-ratio: 16 / 9; }
+  .lm-about-collage__tile--center { grid-column: 1; grid-row: 2; aspect-ratio: 4 / 3; border-radius: 18px; box-shadow: 0 14px 36px rgba(17,17,17,.08); }
+  .lm-about-collage__tile--right  { grid-column: 2; grid-row: 2; aspect-ratio: 4 / 3; }
+  .lm-about-collage__tile--left   { grid-column: 1; grid-row: 3; aspect-ratio: 4 / 3; }
+  .lm-about-collage__tile--edge   { grid-column: 2; grid-row: 3; aspect-ratio: 4 / 3; }
+  .lm-about-collage__tile {
+    border-radius: 14px;
   }
 }
 

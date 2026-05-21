@@ -20,7 +20,9 @@
     var stage = document.getElementById(STAGE_ID);
     if (!root || !stage) return;
 
-    if (w <= 1024) {
+    // ≤1199px は scale=1 とし、レスポンシブ CSS に任せる
+    // (≤1024 だけだと 1025-1199 で文字が極端に縮むため、bento 切替と揃える)
+    if (w <= 1199) {
       root.style.setProperty('--page-scale', 1);
       stage.style.removeProperty('--page-height');
       return;
