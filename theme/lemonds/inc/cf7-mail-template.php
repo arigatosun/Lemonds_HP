@@ -33,66 +33,63 @@ if (!defined('ABSPATH')) {
  */
 if (!defined('LEMONDS_CF7_FORM_MARKUP')) {
     define('LEMONDS_CF7_FORM_MARKUP', <<<'CF7'
-<div class="lm-contact-form">
+<div class="lm-form">
 
-<fieldset class="lm-form__group">
-  <legend>お問い合わせ種別 <span class="required">必須</span></legend>
-  [checkbox* inquiry_type use_label_element
-    "企画・仕様の相談"
-    "見積もり依頼"
-    "サンプルについて"
-    "量産について"
-    "検品・納品条件の相談"
-    "その他"]
-</fieldset>
+<div class="lm-form-block">
+  <div class="lab"><span class="req">必須</span>お問い合わせ種別<span class="hint">複数選択可</span></div>
+  <div class="types">
+    [checkbox* inquiry_type use_label_element
+      "企画・仕様の相談"
+      "見積もり依頼"
+      "サンプルについて"
+      "量産について"
+      "検品・納品条件の相談"
+      "その他"]
+  </div>
+</div>
 
-<div class="lm-form__row">
-  <label>会社名 <span class="required">必須</span>
+<div class="lm-form-grid">
+  <div class="lm-form-block">
+    <div class="lab"><span class="req">必須</span>会社名</div>
     [text* company placeholder "ABC株式会社"]
-  </label>
-</div>
-
-<div class="lm-form__row">
-  <label>ご担当者名 <span class="required">必須</span>
+  </div>
+  <div class="lm-form-block">
+    <div class="lab"><span class="req">必須</span>ご担当者名</div>
     [text* fullname placeholder "田中 太郎"]
-  </label>
-</div>
-
-<div class="lm-form__row">
-  <label>メールアドレス <span class="required">必須</span>
+  </div>
+  <div class="lm-form-block">
+    <div class="lab"><span class="req">必須</span>メールアドレス</div>
     [email* email placeholder "xxxxxxxxxx@example.com"]
-  </label>
-</div>
-
-<div class="lm-form__row">
-  <label>電話番号
+  </div>
+  <div class="lm-form-block">
+    <div class="lab"><span class="opt">任意</span>電話番号</div>
     [tel tel placeholder "000-0000-0000"]
-  </label>
+  </div>
 </div>
 
-<div class="lm-form__row">
-  <label>お問い合わせ内容 <span class="required">必須</span>
-    [textarea* message placeholder "具体的なお問い合わせ内容をご記入ください"]
-  </label>
+<div class="lm-form-block">
+  <div class="lab"><span class="req">必須</span>お問い合わせ内容</div>
+  [textarea* message placeholder "具体的なお問い合わせ内容をご記入ください"]
 </div>
 
-<div class="lm-form__row">
-  <label>ファイル添付（任意、合計10MBまで）
+<div class="lm-form-block">
+  <div class="lab"><span class="opt">任意</span>ファイル添付</div>
+  <div class="file-box">
     [file file_attachment limit:10485760 filetypes:pdf|jpg|jpeg|png|doc|docx|xls|xlsx|ppt|pptx]
-  </label>
+    <span class="hint-text">PDF / 画像 / Office 形式（合計 10MB まで）</span>
+  </div>
 </div>
 
-<div class="lm-form__row lm-form__row--consent">
+<div class="lm-form-block lm-form-agree">
   [acceptance privacy_consent optional-invalid]
     <a href="/policy/" target="_blank" rel="noopener">個人情報保護方針</a>に同意します
   [/acceptance]
 </div>
 
-<div class="lm-form__submit">
-  [submit "送信する"]
+<div class="lm-form-submit">
+  [submit class:lm-contact-btn class:lm-form-submit-button "送信する"]
+  <p class="reply">内容を確認のうえ、担当者より1〜2営業日以内にご連絡いたします。</p>
 </div>
-
-<p class="lm-form__note">内容を確認のうえ、担当者より1〜2営業日以内にご連絡いたします。</p>
 
 </div>
 CF7

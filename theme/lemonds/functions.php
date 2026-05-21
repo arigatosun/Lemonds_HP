@@ -83,6 +83,30 @@ function lemonds_enqueue_assets() {
         LEMONDS_THEME_VERSION
     );
 
+    // 1920基準スケール用 CSS + JS（site.css の後で読み込み、html/body の overflow-x を上書き）
+    wp_enqueue_style(
+        'lemonds-page-scale',
+        get_template_directory_uri() . '/assets/css/page-scale.css',
+        ['lemonds-site'],
+        LEMONDS_THEME_VERSION
+    );
+    wp_enqueue_script(
+        'lemonds-page-scale',
+        get_template_directory_uri() . '/assets/js/page-scale.js',
+        [],
+        LEMONDS_THEME_VERSION,
+        true
+    );
+
+    // ハンバーガーメニュートグル（モバイル/タブレット用）
+    wp_enqueue_script(
+        'lemonds-header-menu',
+        get_template_directory_uri() . '/assets/js/header-menu.js',
+        [],
+        LEMONDS_THEME_VERSION,
+        true
+    );
+
     // contact ページ専用 JS（form-builder が後で生成）
     if (is_page('contact')) {
         $contact_js = get_template_directory() . '/assets/js/contact.js';

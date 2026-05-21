@@ -80,8 +80,6 @@ while (have_posts()) :
     }
     ?>
 
-    <?php get_template_part('template-parts/sub-header'); ?>
-
     <?php
     get_template_part(
         'template-parts/breadcrumb',

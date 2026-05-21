@@ -21,6 +21,31 @@ $lemonds_logo = function_exists('lemonds_logo_brand_url') ? lemonds_logo_brand_u
 <body <?php body_class(); ?>>
 <?php if (function_exists('wp_body_open')) { wp_body_open(); } ?>
 
+<?php
+// 旧版互換: #root に data-screen-label を出力し、ページ別の特殊 CSS と整合させる
+$lemonds_screen_label = '';
+if (is_front_page()) {
+    $lemonds_screen_label = '01 Top';
+} elseif (is_page('services') || is_page_template('page-services.php')) {
+    $lemonds_screen_label = 'Services';
+} elseif (is_page('company') || is_page_template('page-company.php')) {
+    $lemonds_screen_label = 'Company';
+} elseif (is_page('contact') || is_page_template('page-contact.php')) {
+    $lemonds_screen_label = 'Contact';
+} elseif (is_page('thanks') || is_page_template('page-contact-thanks.php')) {
+    $lemonds_screen_label = 'Contact';
+} elseif (is_page('policy') || is_page_template('page-policy.php')) {
+    $lemonds_screen_label = 'Policy';
+} elseif (is_post_type_archive('works') || is_singular('works')) {
+    $lemonds_screen_label = 'Works';
+} elseif (is_post_type_archive('news') || is_singular('news')) {
+    $lemonds_screen_label = 'News';
+}
+?>
+
+<div id="stage">
+  <div id="root"<?php if ($lemonds_screen_label !== '') echo ' data-screen-label="' . esc_attr($lemonds_screen_label) . '"'; ?>>
+
 <header class="lm-header">
     <a href="<?php echo esc_url(lemonds_url('home')); ?>" class="lm-header__logo">
         <?php if ($lemonds_logo) : ?>

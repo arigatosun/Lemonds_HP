@@ -72,6 +72,9 @@ if (!defined('ABSPATH')) {
     </div>
 </footer>
 
+  </div><!-- /#root -->
+</div><!-- /#stage -->
+
 <?php wp_footer(); ?>
 </body>
 </html>

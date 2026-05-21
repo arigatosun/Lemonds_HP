@@ -16,7 +16,6 @@ $company_info = require get_theme_file_path('inc/data-company.php');
 get_header();
 ?>
 
-<?php get_template_part('template-parts/sub-header'); ?>
 <?php get_template_part('template-parts/breadcrumb', null, ['current' => '会社概要']); ?>
 
 <main class="lm-page lm-page--company">
@@ -61,19 +60,19 @@ get_header();
                 <?php
                 $status = isset($row['status']) ? $row['status'] : 'confirmed';
                 $value  = isset($row['value']) ? (string) $row['value'] : '';
+                // 値が未入力の項目はクライアント原稿待ちのため非表示にする
+                // (data-company.php に値を入れれば自動で表示が復活する)
+                if ($status === 'empty' || $value === '') {
+                    continue;
+                }
                 ?>
                 <div class="row">
                     <dt><?php echo esc_html($row['label']); ?></dt>
                     <dd>
-                        <?php if ($status === 'empty' || $value === ''): ?>
-                            <!-- TODO: クライアント差し替え（<?php echo esc_html($row['label']); ?>） -->
-                            <span class="lm-company-table__placeholder">&nbsp;</span>
-                        <?php else: ?>
-                            <?php if ($status === 'unconfirmed'): ?>
-                                <!-- TODO: クライアント確認（<?php echo esc_html($row['label']); ?>: 表記要確認） -->
-                            <?php endif; ?>
-                            <?php echo esc_html($value); ?>
+                        <?php if ($status === 'unconfirmed'): ?>
+                            <!-- TODO: クライアント確認（<?php echo esc_html($row['label']); ?>: 表記要確認） -->
                         <?php endif; ?>
+                        <?php echo esc_html($value); ?>
                     </dd>
                 </div>
             <?php endforeach; ?>

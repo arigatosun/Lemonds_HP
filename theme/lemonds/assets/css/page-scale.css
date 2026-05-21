@@ -1,0 +1,20 @@
+/**
+ * Page scale wrapper — 1920px 基準デザインを transform: scale() でビューポートにフィット。
+ * page-scale.js が --page-scale / --page-height を動的に更新する。
+ */
+
+html, body {
+  overflow-x: hidden;
+}
+
+#stage {
+  width: 100%;
+  height: var(--page-height, auto);
+  overflow: hidden;
+}
+
+#root {
+  width: 1920px;
+  transform-origin: top left;
+  transform: scale(var(--page-scale, 1));
+}

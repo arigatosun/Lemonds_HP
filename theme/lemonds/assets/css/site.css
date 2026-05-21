@@ -8,6 +8,7 @@
   --lm-hero-media-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1760 760'%3E%3Cpath fill='white' d='M44 0L1760 0L1760 200L1365 200L1365 336L1212 336C1207.13 336 1202.43 335.27 1198 333.92L1198 712C1198 736.3 1178.3 760 1154 760L44 760C19.7 760 0 740.3 0 716L0 44C0 19.7 19.7 0 44 0Z'/%3E%3C/svg%3E");
 }
 *, *::before, *::after { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
 body { margin: 0; background: #F4F4F4; font-family: var(--font-jp); color:#111111; }
 html body {
   overflow-x: visible;
@@ -174,7 +175,7 @@ html body {
 .lm-hero__media-image {
   position: absolute;
   inset: 0;
-  background: url(../assets/top-hero-collage-desktop.png) center/cover no-repeat;
+  background: url(../img/top-hero-collage-desktop.png) center/cover no-repeat;
 }
 .lm-hero__media-grid {
   position: absolute;
@@ -510,6 +511,12 @@ html body {
   border-bottom: 1px solid rgba(17,17,17,.18);
   cursor: pointer;
   transition: background 200ms cubic-bezier(.22,1,.36,1), padding 200ms cubic-bezier(.22,1,.36,1);
+}
+/* WP 側で各行を <a> でラップするため、grid 配置を子孫に渡す */
+.lm-news-row__link {
+  display: contents;
+  color: inherit;
+  text-decoration: none;
 }
 .lm-news-row:hover { background: #fff; padding-left: 24px; padding-right: 24px; }
 .lm-news-row .date {
@@ -1186,6 +1193,74 @@ html body {
   transform: translateX(3px);
 }
 
+/* ── CF7 の自動生成 wrapper を旧 chip / form スタイルに橋渡し ────── */
+.lm-form .wpcf7-form-control-wrap { display: block; }
+
+.lm-form .types .wpcf7-form-control-wrap,
+.lm-form .types .wpcf7-checkbox {
+  display: contents;
+}
+.lm-form .types .wpcf7-list-item {
+  display: inline-flex;
+  margin: 0;
+}
+.lm-form .types .wpcf7-list-item > label {
+  display: inline-flex;
+  align-items: center;
+  height: 48px;
+  padding: 0 22px;
+  border: 1px solid rgba(17,17,17,.2);
+  border-radius: 9999px;
+  background: transparent;
+  font: 500 14px/1 var(--font-jp);
+  letter-spacing: .06em;
+  color: #111;
+  cursor: pointer;
+  transition: background 200ms, color 200ms, border-color 200ms;
+}
+.lm-form .types .wpcf7-list-item > label:hover { background: #fff; }
+.lm-form .types .wpcf7-list-item input[type="checkbox"] {
+  position: absolute;
+  width: 1px; height: 1px;
+  opacity: 0;
+  pointer-events: none;
+}
+.lm-form .types .wpcf7-list-item > label:has(input:checked) {
+  background: #111;
+  color: #F4F4F4;
+  border-color: #111;
+}
+
+.lm-form .file-box .wpcf7-form-control-wrap { display: contents; }
+
+.lm-form-agree .wpcf7-form-control-wrap,
+.lm-form-agree .wpcf7-acceptance,
+.lm-form-agree .wpcf7-list-item { display: contents; }
+.lm-form-agree label {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  font: 500 14px/1 var(--font-jp);
+  cursor: pointer;
+}
+.lm-form-agree input[type="checkbox"] {
+  width: 18px; height: 18px;
+  accent-color: #111;
+}
+
+.lm-form .wpcf7-not-valid-tip {
+  font: 500 12px/1.4 var(--font-jp);
+  color: #d6451f;
+  margin-top: 6px;
+}
+.lm-form .wpcf7-response-output {
+  border: 1px solid rgba(17,17,17,.2);
+  padding: 14px 18px;
+  border-radius: 12px;
+  font: 500 13px/1.6 var(--font-jp);
+  margin: 24px 0 0;
+}
+
 /* ──────────────────────────────────────────────────────────────
    THANKS
    ────────────────────────────────────────────────────────────── */
@@ -1287,7 +1362,7 @@ html body {
   position: relative; min-height: 560px;
   background:
     linear-gradient(180deg, rgba(17,17,17,.12), rgba(17,17,17,.46)),
-    url(../assets/top-contact-consultation.jpg) center/cover;
+    url(../img/top-contact-consultation.jpg) center/cover;
 }
 .lm-contact-cta__badge {
   position: absolute; top: 32px; left: 32px;
@@ -1382,7 +1457,7 @@ html body {
 }
 .lm-home-contact__photo {
   position: relative; min-height: 640px;
-  background: url(../assets/top-contact-consultation.jpg) center/cover;
+  background: url(../img/top-contact-consultation.jpg) center/cover;
 }
 .lm-home-contact__badge {
   position: absolute; top: 32px; left: 32px;
@@ -1904,7 +1979,7 @@ html body {
   }
 
   .lm-hero__media-image {
-    background-image: url(../assets/top-hero-collage-mobile.png);
+    background-image: url(../img/top-hero-collage-mobile.png);
     background-size: cover;
     background-position: center top;
   }
@@ -2744,7 +2819,7 @@ html body {
     border-radius: 0;
     overflow: visible;
     isolation: isolate;
-    background: url(../assets/company-about-collage-mobile.png) center top / contain no-repeat;
+    background: url(../img/company-about-collage-mobile.png) center top / contain no-repeat;
     transform: scale(clamp(1.08, calc(.977 + 2.65vw), 1.18));
     transform-origin: center top;
   }
@@ -3382,7 +3457,7 @@ html body {
   }
 
   .lm-hero__media-image {
-    background-image: url(../assets/top-hero-collage-tablet.png);
+    background-image: url(../img/top-hero-collage-tablet.png);
     background-size: cover;
     background-position: center top;
   }
@@ -3423,7 +3498,7 @@ html body {
   }
 
   .lm-hero__media-image {
-    background-image: url(../assets/top-hero-collage-tablet.png);
+    background-image: url(../img/top-hero-collage-tablet.png);
     background-size: cover;
     background-position: center top;
   }

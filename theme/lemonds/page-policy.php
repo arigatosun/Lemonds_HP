@@ -16,8 +16,6 @@ if (!defined('ABSPATH')) {
 get_header();
 ?>
 
-<?php get_template_part('template-parts/sub-header'); ?>
-
 <?php
 get_template_part('template-parts/breadcrumb', null, [
     'items' => [

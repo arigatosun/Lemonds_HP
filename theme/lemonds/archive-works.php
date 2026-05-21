@@ -51,8 +51,6 @@ $lemonds_works_total = $lemonds_works_query->found_posts;
 get_header();
 ?>
 
-<?php get_template_part('template-parts/sub-header'); ?>
-
 <?php
 get_template_part(
     'template-parts/breadcrumb',
